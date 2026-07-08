@@ -66,6 +66,25 @@ Only NuGet dependency: `System.Text.Json 8.0.5`. `System.Net.Http` is a framewor
 - `string.IsNullOrWhiteSpace` for option validation; `string.IsNullOrEmpty` inside crypto helpers.
 - No interfaces unless needed for external dependency or test seam.
 
+## README Maintenance
+
+`README.md` is the public face of the library. **Update it in the same commit as the code change** — never leave it describing an outdated API.
+
+| Code change | README section(s) to update |
+|---|---|
+| New API namespace added to `WhatsProClient` (e.g. `client.Messages`) | **Features** bullet + **Quick Start** example if it is the primary usage entry point |
+| New or renamed `WhatsProOptions` property | **Quick Start** — the options block must stay buildable and representative |
+| New target framework or dropped framework support | **Features** (`Support for …` bullet) |
+| Changed public method signature or return type | **Quick Start** if the example calls that method |
+| New top-level feature (e.g. retry policy, logging) | New bullet in **Features** |
+| Renamed or removed public type | **Quick Start** code block — it must always compile against the current public surface |
+
+### Quick Start rules
+- The Quick Start example must always reflect a **real, working call** against the current public API.
+- Show the minimal happy-path: construct `WhatsProOptions`, create `WhatsProClient`, call one meaningful method, print a result.
+- Current shape: `client.<Namespace>.<MethodAsync>()` — keep that pattern as new namespaces are added.
+- Use the canonical base URL `https://whats-pro.net/backend/public/index.php/api` as the placeholder.
+
 ## Git Commit Messages
 
 When asked to generate a commit message, review the staged git diff and produce a professional message following the **Conventional Commits** specification.

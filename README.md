@@ -12,14 +12,16 @@ A non-official .NET SDK library for the Whats-Pro.net REST API.
 ## Quick Start
 
 ```csharp
+using WhatsPro;
+
 var options = new WhatsProOptions
 {
-    BaseUrl = "http://whats-pro.net/backend/public/index.php/api/user/login",
+    BaseUrl = "https://whats-pro.net/backend/public/index.php/api",
     Email = "your_email@example.com",
     Password = "your_password"
 };
 
-var client = new WhatsProClient(options);
+using var client = new WhatsProClient(options);
 
 // Automatically handles authentication & payload encryption
 var dashboard = await client.Dashboard.GetDashboardAsync();
