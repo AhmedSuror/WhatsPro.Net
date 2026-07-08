@@ -1,6 +1,6 @@
 # WhatsPro.Net
 
-The official .NET SDK for the Whats-Pro REST API.
+A non-official .NET SDK library for the Whats-Pro.net REST API.
 
 ## Features
 - Clean and intuitive API
@@ -14,7 +14,7 @@ The official .NET SDK for the Whats-Pro REST API.
 ```csharp
 var options = new WhatsProOptions
 {
-    BaseUrl = "https://api.whats-pro.com",
+    BaseUrl = "http://whats-pro.net/backend/public/index.php/api/user/login",
     Email = "your_email@example.com",
     Password = "your_password"
 };
