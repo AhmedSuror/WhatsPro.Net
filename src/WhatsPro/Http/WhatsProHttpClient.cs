@@ -96,6 +96,20 @@ internal class WhatsProHttpClient : IDisposable
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
+    public async Task<TResponse> PostMultipartAsync<TResponse>(string uri, string parameterName, string fileName, System.IO.Stream fileStream, CancellationToken cancellationToken = default)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Post, uri);
+        await EnsureAuthenticationAsync(request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        
+        var content = new MultipartFormDataContent();
+        var streamContent = new StreamContent(fileStream);
+        content.Add(streamContent, parameterName, fileName);
+        request.Content = content;
+        
+        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
+    }
+
     private async Task<TResponse> ProcessResponseAsync<TResponse>(HttpResponseMessage response, CancellationToken cancellationToken)
     {
         response.EnsureSuccessStatusCode();
