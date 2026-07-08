@@ -1,4 +1,6 @@
 using System;
+using WhatsPro.Authentication;
+using WhatsPro.Http;
 
 namespace WhatsPro;
 
@@ -8,8 +10,13 @@ namespace WhatsPro;
 public class WhatsProClient : IDisposable
 {
     private readonly WhatsProOptions _options;
-    // private readonly WhatsProHttpClient _httpClient;
+    private readonly WhatsProHttpClient _httpClient;
     private bool _disposed;
+
+    /// <summary>
+    /// Gets the authentication and profile operations.
+    /// </summary>
+    public AuthOperations Auth { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WhatsProClient"/> class.
@@ -21,7 +28,8 @@ public class WhatsProClient : IDisposable
         _options = options ?? throw new ArgumentNullException(nameof(options));
         ValidateOptions(_options);
         
-        // _httpClient = new WhatsProHttpClient(_options);
+        _httpClient = new WhatsProHttpClient(_options);
+        Auth = new AuthOperations(_httpClient);
     }
 
     /// <summary>
@@ -36,7 +44,8 @@ public class WhatsProClient : IDisposable
         configure(_options);
         ValidateOptions(_options);
 
-        // _httpClient = new WhatsProHttpClient(_options);
+        _httpClient = new WhatsProHttpClient(_options);
+        Auth = new AuthOperations(_httpClient);
     }
 
     private static void ValidateOptions(WhatsProOptions options)
@@ -68,7 +77,7 @@ public class WhatsProClient : IDisposable
         {
             if (disposing)
             {
-                // _httpClient?.Dispose();
+                _httpClient?.Dispose();
             }
             _disposed = true;
         }

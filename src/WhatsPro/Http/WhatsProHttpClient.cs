@@ -5,6 +5,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using WhatsPro.Exceptions;
+using WhatsPro.Internal;
+using WhatsPro.Models;
 using WhatsPro.Security;
 
 namespace WhatsPro.Http;
@@ -16,6 +19,7 @@ internal class WhatsProHttpClient : IDisposable
 {
     private readonly HttpClient _httpClient;
     private readonly WhatsProOptions _options;
+    private readonly AuthenticationManager _authManager;
 
     public WhatsProHttpClient(WhatsProOptions options)
     {
@@ -25,45 +29,70 @@ internal class WhatsProHttpClient : IDisposable
         
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        _authManager = new AuthenticationManager(_options, this);
     }
 
-    public async Task<TResponse> GetAsync<TResponse>(string uri, CancellationToken cancellationToken = default)
+    private async Task EnsureAuthenticationAsync(HttpRequestMessage requestMessage, bool skipAuth, CancellationToken cancellationToken)
     {
-        using var response = await _httpClient.GetAsync(uri, cancellationToken).ConfigureAwait(false);
+        if (!skipAuth)
+        {
+            string token = await _authManager.GetTokenAsync(cancellationToken).ConfigureAwait(false);
+            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+    }
+
+    public async Task<TResponse> GetAsync<TResponse>(string uri, bool skipAuth = false, CancellationToken cancellationToken = default)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+        await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
+
+        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TResponse> PostAsync<TRequest, TResponse>(string uri, TRequest request, CancellationToken cancellationToken = default)
+    public async Task<TResponse> PostAsync<TRequest, TResponse>(string uri, TRequest requestData, bool skipAuth = false, CancellationToken cancellationToken = default)
     {
-        string json = JsonSerializer.Serialize(request, JsonOptions.Default);
+        string json = JsonSerializer.Serialize(requestData, JsonOptions.Default);
         string encryptedPayload = PayloadEncryptor.Encrypt(json, _options.EncryptionKey);
         
         var payloadObj = new { payload = encryptedPayload };
         string payloadJson = JsonSerializer.Serialize(payloadObj, JsonOptions.Default);
         
-        using var content = new StringContent(payloadJson, Encoding.UTF8, "application/json");
-        using var response = await _httpClient.PostAsync(uri, content, cancellationToken).ConfigureAwait(false);
+        using var request = new HttpRequestMessage(HttpMethod.Post, uri)
+        {
+            Content = new StringContent(payloadJson, Encoding.UTF8, "application/json")
+        };
+        await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
         
+        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TResponse> PutAsync<TRequest, TResponse>(string uri, TRequest request, CancellationToken cancellationToken = default)
+    public async Task<TResponse> PutAsync<TRequest, TResponse>(string uri, TRequest requestData, bool skipAuth = false, CancellationToken cancellationToken = default)
     {
-        string json = JsonSerializer.Serialize(request, JsonOptions.Default);
+        string json = JsonSerializer.Serialize(requestData, JsonOptions.Default);
         string encryptedPayload = PayloadEncryptor.Encrypt(json, _options.EncryptionKey);
         
         var payloadObj = new { payload = encryptedPayload };
         string payloadJson = JsonSerializer.Serialize(payloadObj, JsonOptions.Default);
 
-        using var content = new StringContent(payloadJson, Encoding.UTF8, "application/json");
-        using var response = await _httpClient.PutAsync(uri, content, cancellationToken).ConfigureAwait(false);
+        using var request = new HttpRequestMessage(HttpMethod.Put, uri)
+        {
+            Content = new StringContent(payloadJson, Encoding.UTF8, "application/json")
+        };
+        await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
 
+        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TResponse> DeleteAsync<TResponse>(string uri, CancellationToken cancellationToken = default)
+    public async Task<TResponse> DeleteAsync<TResponse>(string uri, bool skipAuth = false, CancellationToken cancellationToken = default)
     {
-        using var response = await _httpClient.DeleteAsync(uri, cancellationToken).ConfigureAwait(false);
+        using var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+        await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
+
+        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
@@ -101,7 +130,14 @@ internal class WhatsProHttpClient : IDisposable
         if (string.IsNullOrEmpty(decryptedJson))
             return default!;
 
-        return JsonSerializer.Deserialize<TResponse>(decryptedJson, JsonOptions.Default)!;
+        var result = JsonSerializer.Deserialize<TResponse>(decryptedJson, JsonOptions.Default)!;
+
+        if (result is IWhatsProResponse apiResponse && !apiResponse.Success)
+        {
+            throw new ApiException(apiResponse.Message ?? "The API returned an unsuccessful response.");
+        }
+
+        return result;
     }
 
     public void Dispose()

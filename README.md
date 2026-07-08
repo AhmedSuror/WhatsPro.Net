@@ -24,8 +24,8 @@ var options = new WhatsProOptions
 using var client = new WhatsProClient(options);
 
 // Automatically handles authentication & payload encryption
-var dashboard = await client.Dashboard.GetDashboardAsync();
-Console.WriteLine($"Cards: {dashboard.Data.Cards.Count}");
+var profile = await client.Auth.GetProfileAsync();
+Console.WriteLine($"Logged in as: {profile.Data.User.Name}");
 ```
 
 ## Contributing
