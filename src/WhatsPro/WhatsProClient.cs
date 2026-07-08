@@ -4,6 +4,8 @@ using WhatsPro.Clients;
 using WhatsPro.Dashboard;
 using WhatsPro.Groups;
 using WhatsPro.Http;
+using WhatsPro.Messages;
+using WhatsPro.Sessions;
 
 namespace WhatsPro;
 
@@ -37,6 +39,16 @@ public class WhatsProClient : IDisposable
     public GroupOperations Groups { get; }
 
     /// <summary>
+    /// Gets the sessions management operations.
+    /// </summary>
+    public SessionOperations Sessions { get; }
+
+    /// <summary>
+    /// Gets the messages management operations.
+    /// </summary>
+    public MessageOperations Messages { get; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="WhatsProClient"/> class.
     /// </summary>
     /// <param name="options">The configuration options.</param>
@@ -51,6 +63,8 @@ public class WhatsProClient : IDisposable
         Dashboard = new DashboardOperations(_httpClient);
         Clients = new ClientOperations(_httpClient);
         Groups = new GroupOperations(_httpClient);
+        Sessions = new SessionOperations(_httpClient);
+        Messages = new MessageOperations(_httpClient);
     }
 
     /// <summary>
@@ -70,6 +84,8 @@ public class WhatsProClient : IDisposable
         Dashboard = new DashboardOperations(_httpClient);
         Clients = new ClientOperations(_httpClient);
         Groups = new GroupOperations(_httpClient);
+        Sessions = new SessionOperations(_httpClient);
+        Messages = new MessageOperations(_httpClient);
     }
 
     private static void ValidateOptions(WhatsProOptions options)

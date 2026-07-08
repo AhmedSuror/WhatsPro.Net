@@ -8,6 +8,7 @@ A non-official .NET SDK library for the Whats-Pro.net REST API.
 - **Robust Authentication**: Thread-safe JWT caching and auto-renewal under the hood.
 - **Dashboard API**: Fetch live statistics, charts, and top metrics easily.
 - **Clients & Groups**: Fully typed endpoints to manage clients and groups, including Excel imports.
+- **Sessions & Messages**: Connect multiple WhatsApp instances and send messages seamlessly.
 - **Multi-targeting**: Supports both `.NET Standard 2.0` and `.NET 4.8`.
 
 ## Quick Start
