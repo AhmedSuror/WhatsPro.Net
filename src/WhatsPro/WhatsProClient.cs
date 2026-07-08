@@ -1,5 +1,8 @@
 using System;
 using WhatsPro.Authentication;
+using WhatsPro.Clients;
+using WhatsPro.Dashboard;
+using WhatsPro.Groups;
 using WhatsPro.Http;
 
 namespace WhatsPro;
@@ -19,6 +22,21 @@ public class WhatsProClient : IDisposable
     public AuthOperations Auth { get; }
 
     /// <summary>
+    /// Gets the dashboard analytics operations.
+    /// </summary>
+    public DashboardOperations Dashboard { get; }
+
+    /// <summary>
+    /// Gets the clients management operations.
+    /// </summary>
+    public ClientOperations Clients { get; }
+
+    /// <summary>
+    /// Gets the groups management operations.
+    /// </summary>
+    public GroupOperations Groups { get; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="WhatsProClient"/> class.
     /// </summary>
     /// <param name="options">The configuration options.</param>
@@ -30,6 +48,9 @@ public class WhatsProClient : IDisposable
         
         _httpClient = new WhatsProHttpClient(_options);
         Auth = new AuthOperations(_httpClient);
+        Dashboard = new DashboardOperations(_httpClient);
+        Clients = new ClientOperations(_httpClient);
+        Groups = new GroupOperations(_httpClient);
     }
 
     /// <summary>
@@ -46,6 +67,9 @@ public class WhatsProClient : IDisposable
 
         _httpClient = new WhatsProHttpClient(_options);
         Auth = new AuthOperations(_httpClient);
+        Dashboard = new DashboardOperations(_httpClient);
+        Clients = new ClientOperations(_httpClient);
+        Groups = new GroupOperations(_httpClient);
     }
 
     private static void ValidateOptions(WhatsProOptions options)

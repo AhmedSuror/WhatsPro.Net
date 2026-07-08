@@ -4,10 +4,11 @@ A non-official .NET SDK library for the Whats-Pro.net REST API.
 
 ## Features
 - Clean and intuitive API
-- Strongly typed models
-- Built-in AES encryption
-- Fully asynchronous
-- Support for `net48` and `netstandard2.0`
+- **Strongly Typed Models**: Clean C# classes for all request and response structures.
+- **Robust Authentication**: Thread-safe JWT caching and auto-renewal under the hood.
+- **Dashboard API**: Fetch live statistics, charts, and top metrics easily.
+- **Clients & Groups**: Fully typed endpoints to manage clients and groups, including Excel imports.
+- **Multi-targeting**: Supports both `.NET Standard 2.0` and `.NET 4.8`.
 
 ## Quick Start
 
