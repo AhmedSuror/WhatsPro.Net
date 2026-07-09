@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using WhatsPro.Authentication.Models;
 using WhatsPro.Exceptions;
 using WhatsPro.Http;
-using WhatsPro.Models;
 
 namespace WhatsPro.Internal;
 
@@ -40,22 +39,24 @@ internal class AuthenticationManager
 
             var request = new LoginRequest { Email = _options.Email, Password = _options.Password };
             
-            // Pass skipAuth: true to prevent infinite loop during login
-            var response = await _httpClient.PostAsync<LoginRequest, WhatsProResponse<LoginResponse>>(
+            // Pass skipAuth: true to prevent infinite loop during login.
+            // LoginResponse is a flat model — the login endpoint does not wrap
+            // its payload inside a "data" object like other endpoints do.
+            var response = await _httpClient.PostAsync<LoginRequest, LoginResponse>(
                 "/user/login", 
                 request, 
                 skipAuth: true, 
                 cancellationToken).ConfigureAwait(false);
 
-            if (response == null || !response.Success || response.Data == null)
+            if (response == null || !response.Success)
             {
                 throw new AuthenticationException(response?.Message ?? "Failed to authenticate.");
             }
 
-            _accessToken = response.Data.AccessToken;
-            
+            _accessToken = response.AccessToken;
+
             // The API says token expires in 168 hours. Let's subtract 5 minutes for safety.
-            _expiresAt = DateTime.UtcNow.AddHours(response.Data.ExpiresInHours).AddMinutes(-5);
+            _expiresAt = DateTime.UtcNow.AddHours(response.ExpiresInHours).AddMinutes(-5);
             
             return _accessToken;
         }

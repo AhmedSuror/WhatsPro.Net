@@ -38,9 +38,9 @@ public class AuthOperations
     /// <summary>
     /// Gets the current user's profile information.
     /// </summary>
-    public async Task<WhatsProResponse<ProfileResponse>> GetProfileAsync(CancellationToken cancellationToken = default)
+    public async Task<WhatsProResponse<UserInfo>> GetProfileAsync(CancellationToken cancellationToken = default)
     {
-        return await _httpClient.GetAsync<WhatsProResponse<ProfileResponse>>("/user/profile", skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<UserInfo>>("/user/profile", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using WhatsPro;
 using WhatsPro.Models;
 
@@ -22,7 +23,7 @@ class Program
         var baseUrl = Console.ReadLine();
         if (string.IsNullOrWhiteSpace(baseUrl))
             baseUrl = "https://whats-pro.net/backend/public/index.php/api";
-        
+
         // Email — use secret as default if available
         string email;
         if (!string.IsNullOrWhiteSpace(secretEmail))
@@ -33,7 +34,7 @@ class Program
         }
         else
         {
-        Console.Write("Enter Email: ");
+            Console.Write("Enter Email: ");
             email = Console.ReadLine()!;
         }
 
@@ -47,7 +48,7 @@ class Program
         }
         else
         {
-        Console.Write("Enter Password: ");
+            Console.Write("Enter Password: ");
             password = Console.ReadLine()!;
         }
 
@@ -55,7 +56,7 @@ class Program
 
         var options = new WhatsProOptions
         {
-            BaseUrl = baseUrl,
+            BaseUrl = baseUrl!,
             Email = email!,
             Password = password!
         };
@@ -79,7 +80,10 @@ class Program
                 {
                     case "1":
                         var profile = await client.Auth.GetProfileAsync();
-                        Console.WriteLine($"Success: Logged in as {profile.Data.User.Name} (ID: {profile.Data.User.Id})");
+                        if (profile.Data != null)
+                            Console.WriteLine($"Success: Logged in as {profile.Data.Name} (ID: {profile.Data.Id})");
+                        else
+                            Console.WriteLine("Profile retrieved but user data was unavailable.");
                         break;
                     case "2":
                         var clients = await client.Clients.ListAsync(new PaginationRequest());
