@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\WhatsPro\WhatsPro.csproj" />
@@ -14,6 +14,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UserSecretsId>7b829467-5200-4133-bdf4-dcdfda576637</UserSecretsId>
+    <!-- Not a NuGet package; versioning inherited from Directory.Build.props -->
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
 </Project>

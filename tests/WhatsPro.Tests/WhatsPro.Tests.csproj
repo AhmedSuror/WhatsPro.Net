@@ -4,6 +4,7 @@
     <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- Not a NuGet package; versioning inherited from Directory.Build.props -->
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

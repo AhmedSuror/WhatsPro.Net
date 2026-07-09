@@ -12,6 +12,13 @@
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Pack the icon so it is embedded in the NuGet package -->
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
+    <!-- Pack README and CHANGELOG so they appear on NuGet.org -->
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <Reference Include="System.Net.Http" />
   </ItemGroup>

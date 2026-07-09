@@ -8,10 +8,11 @@
 
   <PropertyGroup Label="Versioning">
     <!--
-      Version strategy: VersionPrefix.VersionSuffix
+      Version strategy: VersionPrefix-VersionSuffix
         - VersionPrefix follows SemVer: MAJOR.MINOR.PATCH
         - VersionSuffix carries the pre-release label (e.g. alpha.1, beta.1, rc.1)
         - Remove VersionSuffix entirely when releasing a stable build
+      All projects share the same version so consumers can reason about compatibility.
     -->
     <VersionPrefix>0.1.0</VersionPrefix>
     <VersionSuffix>alpha.1</VersionSuffix>
@@ -21,17 +22,25 @@
     <FileVersion>0.1.0.1</FileVersion>
   </PropertyGroup>
 
-  <PropertyGroup Label="Package Metadata">
-    <Authors>WhatsPro</Authors>
-    <Company>WhatsPro</Company>
-    <Copyright>Copyright © WhatsPro $([System.DateTime]::UtcNow.Year)</Copyright>
-    <Description>WhatsPro.Net — A fully-typed .NET SDK for the WhatsPro WhatsApp API. Supports authentication, sessions, messaging, groups, clients, dashboard analytics, and more.</Description>
+  <!-- ════════════════════════════════════════════════════════
+       NuGet package metadata — only emitted for packable projects.
+       The sample and test projects are marked IsPackable=false and
+       therefore do NOT produce NuGet packages, but they still inherit
+       the version properties above so their assemblies are versioned
+       consistently with the library.
+       ════════════════════════════════════════════════════════ -->
+  <PropertyGroup Label="Package Metadata" Condition="'$(IsPackable)' != 'false'">
+    <Authors>Ahmed Suror</Authors>
+    <Company>AS</Company>
+    <Copyright>Copyright © AS $([System.DateTime]::UtcNow.Year)</Copyright>
+    <Description>WhatsPro.Net — A fully-typed .NET SDK for the WhatsPro WhatsApp API (https://whats-pro.net). Supports authentication, sessions, messaging, groups, clients, dashboard analytics, and more.</Description>
     <PackageTags>whatsapp;api;sdk;whatspro;messaging;net48;netstandard2.0</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/WhatsPro/WhatsPro.Net</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AhmedSuror/WhatsPro.Net</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/WhatsPro/WhatsPro.Net.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AhmedSuror/WhatsPro.Net.git</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageReleaseNotes>See CHANGELOG.md for full release history.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
