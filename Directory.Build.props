@@ -1,12 +1,38 @@
 <Project>
-  <PropertyGroup>
+  <PropertyGroup Label="Build Settings">
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Versioning">
+    <!--
+      Version strategy: VersionPrefix.VersionSuffix
+        - VersionPrefix follows SemVer: MAJOR.MINOR.PATCH
+        - VersionSuffix carries the pre-release label (e.g. alpha.1, beta.1, rc.1)
+        - Remove VersionSuffix entirely when releasing a stable build
+    -->
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha.1</VersionSuffix>
+    <!-- AssemblyVersion only increments on MAJOR.MINOR to stay compatible with strong-naming -->
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <!-- FileVersion reflects the full numeric version for Win32 resource metadata -->
+    <FileVersion>0.1.0.1</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Metadata">
     <Authors>WhatsPro</Authors>
     <Company>WhatsPro</Company>
+    <Copyright>Copyright © WhatsPro $([System.DateTime]::UtcNow.Year)</Copyright>
+    <Description>WhatsPro.Net — A fully-typed .NET SDK for the WhatsPro WhatsApp API. Supports authentication, sessions, messaging, groups, clients, dashboard analytics, and more.</Description>
+    <PackageTags>whatsapp;api;sdk;whatspro;messaging;net48;netstandard2.0</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/WhatsPro/WhatsPro.Net</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/WhatsPro/WhatsPro.Net.git</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>See CHANGELOG.md for full release history.</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 </Project>
