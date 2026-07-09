@@ -24,7 +24,7 @@ internal class WhatsProHttpClient : IDisposable
     public WhatsProHttpClient(WhatsProOptions options)
     {
         _options = options ?? throw new ArgumentNullException(nameof(options));
-        _httpClient = new HttpClient { BaseAddress = new Uri(_options.BaseUrl) };
+        _httpClient = new HttpClient();
         _httpClient.Timeout = _options.Timeout;
         
         _httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -42,9 +42,16 @@ internal class WhatsProHttpClient : IDisposable
         }
     }
 
+    private string BuildUrl(string uri)
+    {
+        string baseUrl = _options.BaseUrl.TrimEnd('/');
+        string relativeUri = uri.TrimStart('/');
+        return $"{baseUrl}/{relativeUri}";
+    }
+
     public async Task<TResponse> GetAsync<TResponse>(string uri, bool skipAuth = false, CancellationToken cancellationToken = default)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+        using var request = new HttpRequestMessage(HttpMethod.Get, BuildUrl(uri));
         await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
 
         using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -59,7 +66,7 @@ internal class WhatsProHttpClient : IDisposable
         var payloadObj = new { payload = encryptedPayload };
         string payloadJson = JsonSerializer.Serialize(payloadObj, JsonOptions.Default);
         
-        using var request = new HttpRequestMessage(HttpMethod.Post, uri)
+        using var request = new HttpRequestMessage(HttpMethod.Post, BuildUrl(uri))
         {
             Content = new StringContent(payloadJson, Encoding.UTF8, "application/json")
         };
@@ -77,7 +84,7 @@ internal class WhatsProHttpClient : IDisposable
         var payloadObj = new { payload = encryptedPayload };
         string payloadJson = JsonSerializer.Serialize(payloadObj, JsonOptions.Default);
 
-        using var request = new HttpRequestMessage(HttpMethod.Put, uri)
+        using var request = new HttpRequestMessage(HttpMethod.Put, BuildUrl(uri))
         {
             Content = new StringContent(payloadJson, Encoding.UTF8, "application/json")
         };
@@ -89,7 +96,7 @@ internal class WhatsProHttpClient : IDisposable
 
     public async Task<TResponse> DeleteAsync<TResponse>(string uri, bool skipAuth = false, CancellationToken cancellationToken = default)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Delete, uri);
+        using var request = new HttpRequestMessage(HttpMethod.Delete, BuildUrl(uri));
         await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
 
         using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -98,7 +105,7 @@ internal class WhatsProHttpClient : IDisposable
 
     public async Task<TResponse> PostMultipartAsync<TResponse>(string uri, string parameterName, string fileName, System.IO.Stream fileStream, CancellationToken cancellationToken = default)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Post, uri);
+        using var request = new HttpRequestMessage(HttpMethod.Post, BuildUrl(uri));
         await EnsureAuthenticationAsync(request, skipAuth: false, cancellationToken).ConfigureAwait(false);
         
         var content = new MultipartFormDataContent();
