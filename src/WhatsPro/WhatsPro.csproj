@@ -16,4 +16,8 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="WhatsPro.Tests" />
+  </ItemGroup>
+
 </Project>
