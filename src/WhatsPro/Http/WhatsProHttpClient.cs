@@ -47,7 +47,7 @@ internal class WhatsProHttpClient : IDisposable
         using var request = new HttpRequestMessage(HttpMethod.Get, uri);
         await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
 
-        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
@@ -65,7 +65,7 @@ internal class WhatsProHttpClient : IDisposable
         };
         await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
         
-        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
@@ -83,7 +83,7 @@ internal class WhatsProHttpClient : IDisposable
         };
         await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
 
-        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
@@ -92,7 +92,7 @@ internal class WhatsProHttpClient : IDisposable
         using var request = new HttpRequestMessage(HttpMethod.Delete, uri);
         await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
 
-        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
@@ -106,13 +106,42 @@ internal class WhatsProHttpClient : IDisposable
         content.Add(streamContent, parameterName, fileName);
         request.Content = content;
         
-        using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task<HttpResponseMessage> SendRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new NetworkException("Network error occurred while sending the request.", ex);
+        }
+        catch (TaskCanceledException ex) when (!cancellationToken.IsCancellationRequested)
+        {
+            throw new NetworkException("The request timed out.", ex);
+        }
     }
 
     private async Task<TResponse> ProcessResponseAsync<TResponse>(HttpResponseMessage response, CancellationToken cancellationToken)
     {
-        response.EnsureSuccessStatusCode();
+        if (response.StatusCode == (System.Net.HttpStatusCode)422)
+        {
+            string errorJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            throw new ValidationException($"Validation failed (422): {errorJson}");
+        }
+
+        try
+        {
+            response.EnsureSuccessStatusCode();
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new NetworkException($"HTTP request failed with status code {response.StatusCode}.", ex);
+        }
 
         string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         
