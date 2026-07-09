@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using WhatsPro;
@@ -17,6 +18,9 @@ class Program
 
         var secretEmail = configuration["User:Email"];
         var secretPassword = configuration["User:Password"];
+
+        // Enable UTF-8 output so Arabic and other Unicode text renders correctly
+        Console.OutputEncoding = Encoding.UTF8;
 
         Console.WriteLine("WhatsPro.Net Interactive Sample");
         Console.Write("Enter BaseUrl (e.g. https://whats-pro.net/backend/public/index.php/api): ");
@@ -81,21 +85,17 @@ class Program
                     case "1":
                         var profile = await client.Auth.GetProfileAsync();
                         if (profile.Data != null)
-                            Console.WriteLine($"Success: Logged in as {profile.Data.Name} (ID: {profile.Data.Id})");
+                            ConsoleDisplayHelper.PrintProfile(profile.Data);
                         else
                             Console.WriteLine("Profile retrieved but user data was unavailable.");
                         break;
                     case "2":
                         var clients = await client.Clients.ListAsync(new PaginationRequest());
-                        Console.WriteLine($"Success: Found {clients.Data.Total} total clients.");
-                        foreach (var c in clients.Data.Data)
-                        {
-                            Console.WriteLine($" - {c.Name} ({c.Phone})");
-                        }
+                        ConsoleDisplayHelper.PrintClients(clients.Data);
                         break;
                     case "3":
                         var dashboard = await client.Dashboard.GetDashboardAsync();
-                        Console.WriteLine($"Success: Dashboard loaded. Number of cards: {dashboard.Data.Cards.Count}");
+                        ConsoleDisplayHelper.PrintDashboard(dashboard.Data);
                         break;
                     case "4":
                         Console.Write("Enter target phone number (e.g. 2010...): ");
