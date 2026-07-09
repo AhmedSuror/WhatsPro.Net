@@ -9,15 +9,49 @@ class Program
 {
     static async Task Main(string[] args)
     {
+        // Load user secrets
+        var configuration = new ConfigurationBuilder()
+            .AddUserSecrets<Program>()
+            .Build();
+
+        var secretEmail = configuration["User:Email"];
+        var secretPassword = configuration["User:Password"];
+
         Console.WriteLine("WhatsPro.Net Interactive Sample");
         Console.Write("Enter BaseUrl (e.g. https://whats-pro.net/backend/public/index.php/api): ");
         var baseUrl = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(baseUrl)) baseUrl = "https://whats-pro.net/backend/public/index.php/api";
+        if (string.IsNullOrWhiteSpace(baseUrl))
+            baseUrl = "https://whats-pro.net/backend/public/index.php/api";
         
+        // Email — use secret as default if available
+        string email;
+        if (!string.IsNullOrWhiteSpace(secretEmail))
+        {
+            Console.Write($"Enter Email (press Enter to use '{secretEmail}'): ");
+            var input = Console.ReadLine();
+            email = string.IsNullOrWhiteSpace(input) ? secretEmail! : input!;
+        }
+        else
+        {
         Console.Write("Enter Email: ");
-        var email = Console.ReadLine();
+            email = Console.ReadLine()!;
+        }
+
+        // Password — use secret as default if available
+        string password;
+        if (!string.IsNullOrWhiteSpace(secretPassword))
+        {
+            Console.Write("Enter Password (press Enter to use saved secret): ");
+            var input = Console.ReadLine();
+            password = string.IsNullOrWhiteSpace(input) ? secretPassword! : input!;
+        }
+        else
+        {
         Console.Write("Enter Password: ");
-        var password = Console.ReadLine();
+            password = Console.ReadLine()!;
+        }
+
+        Console.WriteLine("─────────────────────────────────────────────");
 
         var options = new WhatsProOptions
         {
