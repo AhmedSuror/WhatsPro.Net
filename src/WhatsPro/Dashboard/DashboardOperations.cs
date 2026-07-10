@@ -25,7 +25,7 @@ public class DashboardOperations
     /// </summary>
     public async Task<WhatsProResponse<DashboardResponse>> GetDashboardAsync(CancellationToken cancellationToken = default)
     {
-        return await _httpClient.GetAsync<WhatsProResponse<DashboardResponse>>("/dashboard/dashboard", skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<DashboardResponse>>("/user/dashboard", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public class DashboardOperations
     /// </summary>
     public async Task<WhatsProResponse<List<int>>> GetSendChartAsync(SendChartRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<SendChartRequest, WhatsProResponse<List<int>>>("/dashboard/send_chart", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<SendChartRequest, WhatsProResponse<List<int>>>("/user/send_chart", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -41,7 +41,6 @@ public class DashboardOperations
     /// </summary>
     public async Task<WhatsProResponse<List<object>>> GetTopNumbersAsync(int top, CancellationToken cancellationToken = default)
     {
-        var request = new { Top = top };
-        return await _httpClient.PostAsync<object, WhatsProResponse<List<object>>>("/dashboard/top_numbers", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<List<object>>>($"/user/top_numbers_chart?top={top}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 }

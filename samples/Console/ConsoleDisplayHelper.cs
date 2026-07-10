@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using WhatsPro.Authentication.Models;
 using WhatsPro.Clients.Models;
 using WhatsPro.Dashboard.Models;
@@ -138,7 +139,7 @@ internal static class ConsoleDisplayHelper
         PrintSectionHeader("Dashboard Cards");
         foreach (var card in data.Cards)
         {
-            PrintField(card.Name, card.Value);
+            PrintField(card.Name, CardValueToString(card.Value));
         }
         Console.WriteLine();
 
@@ -215,6 +216,21 @@ internal static class ConsoleDisplayHelper
         Console.ForegroundColor = color;
         Console.Write(text ?? string.Empty);
         Console.ForegroundColor = prev;
+    }
+
+    private static string? CardValueToString(JsonElement? element)
+    {
+        if (element is null) return null;
+        return element.Value.ValueKind switch
+        {
+            JsonValueKind.Null      => null,
+            JsonValueKind.Undefined => null,
+            JsonValueKind.String    => element.Value.GetString(),
+            JsonValueKind.Number    => element.Value.GetDecimal().ToString("G"),
+            JsonValueKind.True      => "true",
+            JsonValueKind.False     => "false",
+            _                       => element.Value.ToString()
+        };
     }
 
     private static string Truncate(string? value, int max)

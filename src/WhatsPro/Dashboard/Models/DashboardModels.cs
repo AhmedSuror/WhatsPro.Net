@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace WhatsPro.Dashboard.Models;
 
@@ -11,7 +12,7 @@ public class DashboardResponse
 public class DashboardCard
 {
     public string Name { get; set; } = string.Empty;
-    public string Value { get; set; } = string.Empty;
+    public JsonElement? Value { get; set; }
     public string Icon { get; set; } = string.Empty;
 }
 
