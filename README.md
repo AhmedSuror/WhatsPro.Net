@@ -28,6 +28,25 @@ using var client = new WhatsProClient(options);
 // Automatically handles authentication & payload encryption
 var profile = await client.Auth.GetProfileAsync();
 Console.WriteLine($"Logged in as: {profile.Data.User.Name}");
+
+// Send a message via the secure encrypted endpoint
+var encryptedRequest = new WhatsPro.Messages.Models.SendMessageRequest
+{
+    SendPhone = true,
+    Phones = ["+201010959716"],
+    Message = "Hello from secure endpoint!"
+};
+await client.Messages.SendAsync(encryptedRequest);
+
+// Send a message via the unencrypted fallback endpoint
+// (Automatically fetches and uses your account's static ApiToken)
+var unencryptedRequest = new WhatsPro.Messages.Models.SendMessageRequest
+{
+    SendPhone = true,
+    Phones = ["+201010959716"],
+    Message = "Hello from unencrypted endpoint!"
+};
+await client.Messages.SendNonEncryptedAsync(unencryptedRequest);
 ```
 
 ## Contributing
