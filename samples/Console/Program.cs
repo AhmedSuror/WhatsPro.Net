@@ -114,18 +114,74 @@ class Program
                         Console.WriteLine($"Success: Message sent. API says: {sendResult.Message}");
                         break;
                     case "5":
-                        Console.Write("Enter target phone number (e.g. 2010...): ");
-                        var targetPhoneNon = Console.ReadLine();
-                        Console.Write("Enter message text: ");
-                        var msgTextNon = Console.ReadLine();
-                        var msgRequestNon = new Messages.Models.SendMessageRequest
+                        Console.WriteLine("\n--- Send Non-Encrypted Message ---");
+                        Console.WriteLine("1. Full phone format");
+                        Console.WriteLine("2. Country code");
+                        Console.WriteLine("3. Image URL");
+                        Console.WriteLine("4. Base64 Image");
+                        Console.WriteLine("5. Document");
+                        Console.Write("Choose type: ");
+                        var typeChoice = Console.ReadLine();
+                        
+                        var msgRequestNon = new Messages.Models.SendMessageRequest { SendPhone = true };
+
+                        if (typeChoice == "1" || typeChoice == "2" || typeChoice == "3" || typeChoice == "4" || typeChoice == "5")
                         {
-                            SendPhone = true,
-                            Phones = new System.Collections.Generic.List<string> { targetPhoneNon! },
-                            Message = msgTextNon!
-                        };
-                        var sendResultNon = await client.Messages.SendNonEncryptedAsync(msgRequestNon);
-                        Console.WriteLine($"Success: Message sent (Non-Encrypted). API says: {sendResultNon.Message}");
+                            Console.Write("Enter target phone number: ");
+                            var targetPhoneNon = Console.ReadLine();
+                            msgRequestNon.Phones = new System.Collections.Generic.List<string> { targetPhoneNon! };
+                            
+                            Console.Write("Enter message text: ");
+                            msgRequestNon.Message = Console.ReadLine()!;
+                            
+                            if (typeChoice == "2" || typeChoice == "3" || typeChoice == "4")
+                            {
+                                Console.Write("Enter country code (e.g. EG): ");
+                                msgRequestNon.CountryCode = Console.ReadLine()!;
+                            }
+                            
+                            if (typeChoice == "3")
+                            {
+                                Console.Write("Enter Image URL: ");
+                                msgRequestNon.ImgUrl = Console.ReadLine()!;
+                            }
+                            else if (typeChoice == "4")
+                            {
+                                Console.Write("Enter Base64 Image data: ");
+                                msgRequestNon.Img = Console.ReadLine()!;
+                            }
+                            else if (typeChoice == "5")
+                            {
+                                Console.Write("Enter file path to upload: ");
+                                var filePath = Console.ReadLine()?.Trim('"');
+                                if (string.IsNullOrWhiteSpace(filePath) || !System.IO.File.Exists(filePath))
+                                {
+                                    Console.WriteLine($"File not found: {filePath}");
+                                    break;
+                                }
+                                Console.WriteLine("Uploading document...");
+                                using var stream = System.IO.File.OpenRead(filePath);
+                                var fileName = System.IO.Path.GetFileName(filePath);
+                                var uploadResult = await client.Messages.UploadDocumentAsync(fileName, stream);
+                                if (uploadResult.Success && uploadResult.Data != null)
+                                {
+                                    msgRequestNon.DocId = uploadResult.Data.Id;
+                                    Console.WriteLine($"Document uploaded. ID: {msgRequestNon.DocId}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Upload failed: {uploadResult.Message}");
+                                    break;
+                                }
+                            }
+                            
+                            var sendResultNon = await client.Messages.SendNonEncryptedAsync(msgRequestNon);
+                            Console.WriteLine($"Success: Message sent (Non-Encrypted). API says: {sendResultNon.Message}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid type choice.");
+                        }
                         break;
                     case "6":
                         var token = await client.Auth.GetApiTokenAsync();

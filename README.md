@@ -43,8 +43,10 @@ await client.Messages.SendAsync(encryptedRequest);
 var unencryptedRequest = new WhatsPro.Messages.Models.SendMessageRequest
 {
     SendPhone = true,
-    Phones = ["+201010959716"],
-    Message = "Hello from unencrypted endpoint!"
+    Phones = ["01010959716"], // Or use full format like "+201010959716"
+    CountryCode = "EG", // Optional
+    Message = "Hello from unencrypted endpoint!",
+    ImgUrl = "https://example.com/image.png" // Optional
 };
 await client.Messages.SendNonEncryptedAsync(unencryptedRequest);
 ```

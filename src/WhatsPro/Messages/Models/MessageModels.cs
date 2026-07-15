@@ -40,4 +40,16 @@ public class SendMessageRequest
     public bool SendAllClients { get; set; }
     [JsonPropertyName("message")]
     public string Message { get; set; } = string.Empty;
+
+    [JsonPropertyName("country_code")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? CountryCode { get; set; }
+
+    [JsonPropertyName("img_url")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? ImgUrl { get; set; }
+
+    [JsonPropertyName("doc_id")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? DocId { get; set; }
 }

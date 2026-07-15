@@ -43,4 +43,20 @@ public class MessageOperations
     {
         return await _httpClient.PostUnencryptedAsync<SendMessageRequest, WhatsProResponse<string>>("/messages/send", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
+
+    public async Task<WhatsProResponse<DocumentUploadResponse>> UploadDocumentAsync(string fileName, System.IO.Stream fileStream, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(fileName))
+            throw new ArgumentException("File name cannot be null or empty.", nameof(fileName));
+        if (fileStream == null)
+            throw new ArgumentNullException(nameof(fileStream));
+
+        return await _httpClient.PostMultipartUnencryptedAsync<WhatsProResponse<DocumentUploadResponse>>(
+            "/documents/token-upload", 
+            "file", 
+            fileName, 
+            fileStream, 
+            skipAuth: false, 
+            cancellationToken).ConfigureAwait(false);
+    }
 }
