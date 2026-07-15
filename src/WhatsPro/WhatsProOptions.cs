@@ -18,6 +18,11 @@ public class WhatsProOptions
     public string Email { get; set; } = string.Empty;
 
     /// <summary>
+    /// The API token used for non-encrypted endpoints.
+    /// </summary>
+    public string ApiToken { get; set; } = string.Empty;
+
+    /// <summary>
     /// The password used for authentication.
     /// </summary>
     public string Password { get; set; } = string.Empty;

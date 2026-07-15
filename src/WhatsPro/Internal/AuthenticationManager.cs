@@ -14,6 +14,7 @@ internal class AuthenticationManager
     private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
     
     private string? _accessToken;
+    private string? _apiToken;
     private DateTime _expiresAt;
 
     public AuthenticationManager(WhatsProOptions options, WhatsProHttpClient httpClient)
@@ -54,6 +55,7 @@ internal class AuthenticationManager
             }
 
             _accessToken = response.AccessToken;
+            _apiToken = response.User?.ApiToken;
 
             // The API says token expires in 168 hours. Let's subtract 5 minutes for safety.
             _expiresAt = DateTime.UtcNow.AddHours(response.ExpiresInHours).AddMinutes(-5);
@@ -64,5 +66,15 @@ internal class AuthenticationManager
         {
             _semaphore.Release();
         }
+    }
+
+    public async Task<string> GetApiTokenAsync(CancellationToken cancellationToken)
+    {
+        if (!string.IsNullOrEmpty(_options.ApiToken))
+            return _options.ApiToken;
+
+        // Ensure we are logged in so we can fetch it
+        await GetTokenAsync(cancellationToken).ConfigureAwait(false);
+        return _apiToken ?? string.Empty;
     }
 }

@@ -58,4 +58,12 @@ public class AuthOperations
     {
         return await _httpClient.PostAsync<ChangePasswordRequest, WhatsProResponse<string>>("/user/profile/password", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// Gets the current API token used for non-encrypted endpoints.
+    /// </summary>
+    public async Task<string> GetApiTokenAsync(CancellationToken cancellationToken = default)
+    {
+        return await _httpClient.GetApiTokenAsync(cancellationToken).ConfigureAwait(false);
+    }
 }

@@ -58,6 +58,11 @@ internal class WhatsProHttpClient : IDisposable
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
     }
 
+    internal Task<string> GetApiTokenAsync(CancellationToken cancellationToken)
+    {
+        return _authManager.GetApiTokenAsync(cancellationToken);
+    }
+
     public async Task<TResponse> PostAsync<TRequest, TResponse>(string uri, TRequest requestData, bool skipAuth = false, CancellationToken cancellationToken = default)
     {
         string json = JsonSerializer.Serialize(requestData, JsonOptions.Default);
@@ -71,6 +76,26 @@ internal class WhatsProHttpClient : IDisposable
             Content = new StringContent(payloadJson, Encoding.UTF8, "application/json")
         };
         await EnsureAuthenticationAsync(request, skipAuth, cancellationToken).ConfigureAwait(false);
+        
+        using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+        return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
+    }
+
+    public async Task<TResponse> PostUnencryptedAsync<TRequest, TResponse>(string uri, TRequest requestData, bool skipAuth = false, CancellationToken cancellationToken = default)
+    {
+        string json = JsonSerializer.Serialize(requestData, JsonOptions.Default);
+        
+        using var request = new HttpRequestMessage(HttpMethod.Post, BuildUrl(uri))
+        {
+            Content = new StringContent(json, Encoding.UTF8, "application/json")
+        };
+
+        if (!skipAuth)
+        {
+            string apiToken = await _authManager.GetApiTokenAsync(cancellationToken).ConfigureAwait(false);
+            if (!string.IsNullOrEmpty(apiToken))
+                request.Headers.Add("token", apiToken);
+        }
         
         using var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
         return await ProcessResponseAsync<TResponse>(response, cancellationToken).ConfigureAwait(false);
