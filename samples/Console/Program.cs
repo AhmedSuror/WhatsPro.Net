@@ -73,8 +73,10 @@ class Program
             Console.WriteLine("1. Get Profile (Login implicitly)");
             Console.WriteLine("2. List Clients");
             Console.WriteLine("3. Get Dashboard");
-            Console.WriteLine("4. Send Message");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("4. Send Message (Encrypted)");
+            Console.WriteLine("5. Send Message (Non-Encrypted)");
+            Console.WriteLine("6. View API Token");
+            Console.WriteLine("7. Exit");
             Console.Write("Choose an option: ");
             var choice = Console.ReadLine();
 
@@ -104,13 +106,32 @@ class Program
                         var msgText = Console.ReadLine();
                         var msgRequest = new Messages.Models.SendMessageRequest
                         {
-                            SendPhone = targetPhone!,
+                            SendPhone = true,
+                            Phones = new System.Collections.Generic.List<string> { targetPhone! },
                             Message = msgText!
                         };
                         var sendResult = await client.Messages.SendAsync(msgRequest);
                         Console.WriteLine($"Success: Message sent. API says: {sendResult.Message}");
                         break;
                     case "5":
+                        Console.Write("Enter target phone number (e.g. 2010...): ");
+                        var targetPhoneNon = Console.ReadLine();
+                        Console.Write("Enter message text: ");
+                        var msgTextNon = Console.ReadLine();
+                        var msgRequestNon = new Messages.Models.SendMessageRequest
+                        {
+                            SendPhone = true,
+                            Phones = new System.Collections.Generic.List<string> { targetPhoneNon! },
+                            Message = msgTextNon!
+                        };
+                        var sendResultNon = await client.Messages.SendNonEncryptedAsync(msgRequestNon);
+                        Console.WriteLine($"Success: Message sent (Non-Encrypted). API says: {sendResultNon.Message}");
+                        break;
+                    case "6":
+                        var token = await client.Auth.GetApiTokenAsync();
+                        Console.WriteLine($"Your API Token is: {token}");
+                        break;
+                    case "7":
                         return;
                     default:
                         Console.WriteLine("Invalid option.");
