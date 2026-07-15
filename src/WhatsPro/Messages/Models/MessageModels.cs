@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace WhatsPro.Messages.Models;
 
@@ -19,14 +20,24 @@ public class MessageInfo
 
 public class SendMessageRequest
 {
-    public string SendPhone { get; set; } = string.Empty;
+    [JsonPropertyName("send_phone")]
+    public bool SendPhone { get; set; }
+    [JsonPropertyName("phones")]
     public List<string> Phones { get; set; } = new List<string>();
+    [JsonPropertyName("send_group")]
     public bool SendGroup { get; set; }
+    [JsonPropertyName("group_id")]
     public int GroupId { get; set; }
+    [JsonPropertyName("send_client")]
     public bool SendClient { get; set; }
+    [JsonPropertyName("client_ids")]
     public List<int> ClientIds { get; set; } = new List<int>();
+    [JsonPropertyName("img")]
     public string Img { get; set; } = string.Empty;
+    [JsonPropertyName("client_default_phone")]
     public bool ClientDefaultPhone { get; set; }
+    [JsonPropertyName("send_all_clients")]
     public bool SendAllClients { get; set; }
+    [JsonPropertyName("message")]
     public string Message { get; set; } = string.Empty;
 }

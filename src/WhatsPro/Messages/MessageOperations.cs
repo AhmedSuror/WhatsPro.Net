@@ -36,6 +36,11 @@ public class MessageOperations
 
     public async Task<WhatsProResponse<string>> SendAsync(SendMessageRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<SendMessageRequest, WhatsProResponse<string>>("/messages/send", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<SendMessageRequest, WhatsProResponse<string>>("/user/messages/send", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+    }
+
+    public async Task<WhatsProResponse<string>> SendNonEncryptedAsync(SendMessageRequest request, CancellationToken cancellationToken = default)
+    {
+        return await _httpClient.PostUnencryptedAsync<SendMessageRequest, WhatsProResponse<string>>("/messages/send", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 }
