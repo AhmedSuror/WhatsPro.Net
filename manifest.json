@@ -1,0 +1,1090 @@
+{
+  "source_base_path": "/home/runner/work/WhatsPro.Net/WhatsPro.Net",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "CHANGELOG.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "CONTRIBUTING.md",
+      "output": {
+        ".html": {
+          "relative_path": "CONTRIBUTING.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.AuthOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.AuthOperations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.AuthOperations",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Authentication.AuthOperations.yml\" sourcestartlinenumber=\"1\">Operations related to user authentication and profile management.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.ChangePasswordRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.ChangePasswordRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models.ChangePasswordRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.LoginRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.LoginRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models.LoginRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.LoginResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.LoginResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models.LoginResponse",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Authentication.Models.LoginResponse.yml\" sourcestartlinenumber=\"1\">Flat response returned by the login endpoint.\nThe API does not wrap login data inside a <code>data</code> object, so this\nmodel implements <xref href=\"WhatsPro.Models.IWhatsProResponse\" data-throw-if-not-resolved=\"false\"></xref> directly.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.ProfileInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.ProfileInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models.ProfileInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.RegisterRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.RegisterRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models.RegisterRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.UpdateProfileRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.UpdateProfileRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models.UpdateProfileRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.UserInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.UserInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models.UserInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Authentication.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Authentication.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Authentication",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.ClientOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.ClientOperations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.ClientOperations",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Clients.ClientOperations.yml\" sourcestartlinenumber=\"1\">Operations related to clients management.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.AddPhoneRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.AddPhoneRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models.AddPhoneRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.ChangeGroupRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.ChangeGroupRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models.ChangeGroupRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.ClientInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.ClientInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models.ClientInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.CreateClientRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.CreateClientRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models.CreateClientRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.CreateClientResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.CreateClientResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models.CreateClientResponse",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.PhoneInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.PhoneInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models.PhoneInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.UpdateClientRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.UpdateClientRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models.UpdateClientRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Clients.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Clients.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Clients",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.DashboardOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.DashboardOperations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.DashboardOperations",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Dashboard.DashboardOperations.yml\" sourcestartlinenumber=\"1\">Operations related to the dashboard and analytics.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.Models.DashboardCard.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.Models.DashboardCard.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.Models.DashboardCard",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.Models.DashboardPercentage.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.Models.DashboardPercentage.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.Models.DashboardPercentage",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.Models.DashboardResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.Models.DashboardResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.Models.DashboardResponse",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.Models.PercentageData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.Models.PercentageData.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.Models.PercentageData",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.Models.SendChartRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.Models.SendChartRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.Models.SendChartRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.Models.TopNumberItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.Models.TopNumberItem.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.Models.TopNumberItem",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Dashboard.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Dashboard.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Dashboard",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Exceptions.ApiException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Exceptions.ApiException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Exceptions.ApiException",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Exceptions.ApiException.yml\" sourcestartlinenumber=\"1\">Exception thrown when the Whats-Pro API returns an unsuccessful response.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Exceptions.AuthenticationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Exceptions.AuthenticationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Exceptions.AuthenticationException",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Exceptions.AuthenticationException.yml\" sourcestartlinenumber=\"1\">Exception thrown when authentication with the Whats-Pro API fails.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Exceptions.NetworkException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Exceptions.NetworkException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Exceptions.NetworkException",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Exceptions.NetworkException.yml\" sourcestartlinenumber=\"1\">Exception thrown when a network or transport-level error occurs during the API request.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Exceptions.ValidationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Exceptions.ValidationException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Exceptions.ValidationException",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Exceptions.ValidationException.yml\" sourcestartlinenumber=\"1\">Exception thrown when the API returns a validation error (e.g. HTTP 422).</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Exceptions.WhatsProException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Exceptions.WhatsProException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Exceptions.WhatsProException",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Exceptions.WhatsProException.yml\" sourcestartlinenumber=\"1\">Base exception for all WhatsPro.Net SDK exceptions.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Exceptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Exceptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Exceptions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.GroupOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.GroupOperations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.GroupOperations",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Groups.GroupOperations.yml\" sourcestartlinenumber=\"1\">Operations related to groups management.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.Models.CreateGroupRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.Models.CreateGroupRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.Models.CreateGroupRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.Models.CreateGroupResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.Models.CreateGroupResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.Models.CreateGroupResponse",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.Models.GroupInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.Models.GroupInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.Models.GroupInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.Models.TransferClientsRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.Models.TransferClientsRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.Models.TransferClientsRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.Models.UpdateGroupRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.Models.UpdateGroupRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.Models.UpdateGroupRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Groups.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Groups.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Messages.MessageOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Messages.MessageOperations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Messages.MessageOperations",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Messages.MessageOperations.yml\" sourcestartlinenumber=\"1\">Operations related to message sending and management.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Messages.Models.DocumentUploadResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Messages.Models.DocumentUploadResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Messages.Models.DocumentUploadResponse",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Messages.Models.MessageInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Messages.Models.MessageInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Messages.Models.MessageInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Messages.Models.SendMessageRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Messages.Models.SendMessageRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Messages.Models.SendMessageRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Messages.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Messages.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Messages.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Messages.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Messages.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Messages",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Models.DeleteRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Models.DeleteRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Models.DeleteRequest",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Models.DeleteRequest.yml\" sourcestartlinenumber=\"1\">A shared request model for deleting items by their IDs.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Models.IWhatsProResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Models.IWhatsProResponse.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Models.IWhatsProResponse",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Models.IWhatsProResponse.yml\" sourcestartlinenumber=\"1\">Defines the standard properties of a Whats-Pro API response.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Models.PagedResponse-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Models.PagedResponse-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Models.PagedResponse<T>",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Models.PagedResponse-1.yml\" sourcestartlinenumber=\"1\">Represents a paginated response from the Whats-Pro API.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Models.PaginationRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Models.PaginationRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Models.PaginationRequest",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Models.PaginationRequest.yml\" sourcestartlinenumber=\"1\">Represents a request for paginated data.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Models.WhatsProResponse-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Models.WhatsProResponse-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Models.WhatsProResponse<T>",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Models.WhatsProResponse-1.yml\" sourcestartlinenumber=\"1\">A generic response wrapper for the Whats-Pro API.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Security.PayloadEncryptor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Security.PayloadEncryptor.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Security.PayloadEncryptor",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Security.PayloadEncryptor.yml\" sourcestartlinenumber=\"1\">Handles AES encryption and decryption of payloads using CryptoJS compatibility.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Security.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Security.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Security",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Sessions.Models.SessionInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Sessions.Models.SessionInfo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Sessions.Models.SessionInfo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Sessions.Models.SetWebhookRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Sessions.Models.SetWebhookRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Sessions.Models.SetWebhookRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Sessions.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Sessions.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Sessions.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Sessions.SessionOperations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Sessions.SessionOperations.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Sessions.SessionOperations",
+      "Summary": "<p sourcefile=\"api/WhatsPro.Sessions.SessionOperations.yml\" sourcestartlinenumber=\"1\">Operations related to session management.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.Sessions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.Sessions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Sessions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.WhatsProClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.WhatsProClient.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.WhatsProClient",
+      "Summary": "<p sourcefile=\"api/WhatsPro.WhatsProClient.yml\" sourcestartlinenumber=\"1\">The main entry point for interacting with the Whats-Pro API.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.WhatsProOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.WhatsProOptions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.WhatsProOptions",
+      "Summary": "<p sourcefile=\"api/WhatsPro.WhatsProOptions.yml\" sourcestartlinenumber=\"1\">Configuration options for the WhatsProClient.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WhatsPro.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WhatsPro.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Authentication.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Authentication.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Clients.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Clients.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Dashboard.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Dashboard.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Groups.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Groups.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Messages.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Messages.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/Sessions.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/Sessions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/api-reference.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/api-reference.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/configuration.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/configuration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

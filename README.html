@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>WhatsPro.Net </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="WhatsPro.Net ">
+      
+      
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/AhmedSuror/WhatsPro.Net/blob/main/README.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="whatspronet">WhatsPro.Net</h1>
+
+<p>A non-official .NET SDK library for the Whats-Pro.net REST API.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Clean and intuitive API</li>
+<li><strong>Strongly Typed Models</strong>: Clean C# classes for all request and response structures.</li>
+<li><strong>Robust Authentication</strong>: Thread-safe JWT caching and auto-renewal under the hood.</li>
+<li><strong>Dashboard API</strong>: Fetch live statistics, charts, and top metrics easily.</li>
+<li><strong>Clients &amp; Groups</strong>: Fully typed endpoints to manage clients and groups, including Excel imports.</li>
+<li><strong>Sessions &amp; Messages</strong>: Connect multiple WhatsApp instances and send messages seamlessly.</li>
+<li><strong>Multi-targeting</strong>: Supports both <code>.NET Standard 2.0</code> and <code>.NET 4.8</code>.</li>
+</ul>
+<h2 id="full-sdk-usage-guide">Full SDK Usage Guide</h2>
+<p>We provide a comprehensive, tutorial-style usage guide for all modules in the SDK:</p>
+<ul>
+<li><a href="docs/Introduction.html">Introduction &amp; Setup</a></li>
+<li><a href="docs/Authentication.html">Authentication</a></li>
+<li><a href="docs/Messages.html">Messages</a></li>
+<li><a href="docs/Clients.html">Clients</a></li>
+<li><a href="docs/Groups.html">Groups</a></li>
+<li><a href="docs/Sessions.html">Sessions</a></li>
+<li><a href="docs/Dashboard.html">Dashboard</a></li>
+</ul>
+<h2 id="generating-and-publishing-documentation">Generating and Publishing Documentation</h2>
+<p>This repository uses <a href="https://dotnet.github.io/docfx/">DocFX</a> to generate a beautiful, interactive documentation site that includes both our <strong>Usage Guides</strong> and <strong>API Reference</strong>.</p>
+<h3 id="local-generation">Local Generation</h3>
+<p>To build the documentation locally:</p>
+<ol>
+<li>Install DocFX: <code>dotnet tool update -g docfx</code></li>
+<li>Run DocFX in the repository root: <code>docfx docfx.json --serve</code></li>
+<li>Navigate to <code>http://localhost:8080</code> to view the site.</li>
+</ol>
+<h3 id="publishing-to-github-pages-with-a-custom-subdomain">Publishing to GitHub Pages with a Custom Subdomain</h3>
+<p>We recommend hosting your documentation on <strong>GitHub Pages</strong>, mapped to your custom subdomain (e.g., <code>docs.yourwebsite.com</code>).</p>
+<p><strong>Step 1: Set up a GitHub Action</strong>
+You can create a GitHub Action (<code>.github/workflows/docs.yml</code>) that runs <code>docfx</code> and pushes the <code>_site</code> output to the <code>gh-pages</code> branch on every push to <code>main</code>.</p>
+<p><strong>Step 2: Configure your Custom Domain</strong></p>
+<ol>
+<li>Go to your repository <strong>Settings</strong> &gt; <strong>Pages</strong>.</li>
+<li>Under <strong>Build and deployment</strong>, select &quot;Deploy from a branch&quot; and choose the <code>gh-pages</code> branch.</li>
+<li>Under <strong>Custom domain</strong>, enter your desired subdomain (e.g., <code>docs.whatspro.net</code>) and click <strong>Save</strong>. This will automatically create a <code>CNAME</code> commit in your <code>gh-pages</code> branch.</li>
+<li>Go to your domain registrar (e.g., GoDaddy, Cloudflare) and create a <strong>CNAME record</strong> pointing your subdomain (<code>docs</code>) to <code>&lt;your-github-username&gt;.github.io</code>.</li>
+</ol>
+<p>Once DNS propagation completes, your full SDK documentation will be live on your custom domain!</p>
+<h2 id="contributing">Contributing</h2>
+<p>Please see <code>CONTRIBUTING.md</code> for details on contributing to the project.</p>
+<h2 id="license">License</h2>
+<p>This project is licensed under the Apache License 2.0 - see the <code>LICENSE</code> file for details.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/AhmedSuror/WhatsPro.Net/blob/main/README.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Changelog </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Changelog ">
+      
+      
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/AhmedSuror/WhatsPro.Net/blob/main/CHANGELOG.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="changelog">Changelog</h1>
+
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
+and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<hr>
+<h2 id="010-alpha1---2026-07-09"><a href="https://github.com/WhatsPro/WhatsPro.Net/releases/tag/v0.1.0-alpha.1">0.1.0-alpha.1</a> - 2026-07-09</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Core SDK</strong> — Initial <code>WhatsPro.Net</code> SDK scaffold with core HTTP infrastructure and <code>WhatsProClient</code> entry point.</li>
+<li><strong>Authentication</strong> — Login and user-profile support with JWT token generation and transparent caching.</li>
+<li><strong>Security</strong> — Auto-AES payload encryption integrated at the HTTP layer.</li>
+<li><strong>Multipart HTTP</strong> — Multipart/form-data support for file-upload endpoints.</li>
+<li><strong>Dashboard</strong> — Dashboard analytics operations module.</li>
+<li><strong>Clients</strong> — Client management operations including Excel-based bulk import.</li>
+<li><strong>Groups</strong> — Groups management operations module.</li>
+<li><strong>Sessions</strong> — Session management operations module.</li>
+<li><strong>Messages</strong> — Messaging operations module (send, list, etc.).</li>
+<li><strong>SDK surface</strong> — <code>WhatsProClient</code> now exposes Sessions, Messages, Groups, Clients, Dashboard, and Authentication modules.</li>
+<li><strong>Error handling</strong> — Enhanced structured error handling, custom exceptions, and input validations.</li>
+<li><strong>Tests</strong> — Multi-targeted test suite covering <code>net48</code> and <code>netstandard2.0</code>.</li>
+<li><strong>Console Sample</strong> — Interactive console sample application with user-secrets support and rich formatted output helpers.</li>
+<li><strong>Documentation</strong> — GitHub Actions CI, contributing guide, issue templates, and detailed README.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><strong>HTTP</strong> — Resolved base-address path concatenation issue that caused incorrect API endpoint URLs.</li>
+</ul>
+<h3 id="refactored">Refactored</h3>
+<ul>
+<li><strong>Auth models</strong> — Flattened login and profile models/responses for a cleaner public API surface.</li>
+</ul>
+<h3 id="dependencies">Dependencies</h3>
+<ul>
+<li><code>System.Text.Json</code> bumped to 10.0.9</li>
+<li><code>Microsoft.NET.Test.Sdk</code> bumped to 18.7.0</li>
+<li><code>xunit</code> bumped to 2.9.3</li>
+<li><code>xunit.runner.visualstudio</code> bumped to 3.1.5</li>
+<li><code>coverlet.collector</code> bumped to 10.0.1</li>
+<li>GitHub Actions: <code>actions/checkout</code> to v7, <code>actions/setup-dotnet</code> to v5</li>
+</ul>
+<hr>
+<h2 id="unreleased"><a href="https://github.com/WhatsPro/WhatsPro.Net/compare/v0.1.0-alpha.1...HEAD">Unreleased</a></h2>
+<blockquote>
+<p>Changes targeting the next release will be tracked here.</p>
+</blockquote>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/AhmedSuror/WhatsPro.Net/blob/main/CHANGELOG.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

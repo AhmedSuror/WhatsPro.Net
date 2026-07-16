@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Sending Messages </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Sending Messages ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/AhmedSuror/WhatsPro.Net/blob/main/docs/Messages.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="sending-messages">Sending Messages</h1>
+
+<p>Sending messages is the core functionality of WhatsPro. The SDK provides two distinct ways to send messages, depending on your security requirements and infrastructure.</p>
+<h2 id="1-encrypted-messages-recommended">1. Encrypted Messages (Recommended)</h2>
+<p>The encrypted messaging endpoint provides end-to-end payload encryption between your .NET application and the WhatsPro server. When you use <code>client.Messages.SendAsync</code>, the SDK automatically:</p>
+<ol>
+<li>Fetches the cryptographic keys for your connected WhatsApp session.</li>
+<li>AES-encrypts your message payload.</li>
+<li>Sends the cipher data securely over the wire.</li>
+</ol>
+<p>Use this method when sending sensitive information like OTPs, financial alerts, or personal data.</p>
+<pre><code class="lang-csharp">var request = new WhatsPro.Messages.Models.SendMessageRequest
+{
+    SendPhone = true, // Set to true to send to a direct phone number
+    Phones = new[] { &quot;+1234567890&quot; },
+    Message = &quot;Hello from the secure encrypted endpoint! 🔒&quot;
+};
+
+var response = await client.Messages.SendAsync(request);
+Console.WriteLine(response.Message);
+</code></pre>
+<h2 id="2-unencrypted-token-messages-fallback">2. Unencrypted Token Messages (Fallback)</h2>
+<p>If you have issues with the encryption keys or prefer the simpler legacy endpoint, you can use <code>SendNonEncryptedAsync</code>. This endpoint does not require AES payload encryption and instead relies on standard HTTPS and your account's static API Token (which the SDK injects automatically).</p>
+<pre><code class="lang-csharp">var unencryptedRequest = new WhatsPro.Messages.Models.SendMessageRequest
+{
+    SendPhone = true,
+    Phones = new[] { &quot;+1234567890&quot; },
+    Message = &quot;Hello from the unencrypted endpoint!&quot;,
+    ImgUrl = &quot;https://example.com/promotional-banner.png&quot; // You can attach media URLs
+};
+
+await client.Messages.SendNonEncryptedAsync(unencryptedRequest);
+</code></pre>
+<hr>
+<h2 id="managing-message-history">Managing Message History</h2>
+<p>You can view the history of messages you've sent, which is useful for building audit logs or delivery receipt dashboards.</p>
+<h3 id="listing-sent-messages">Listing Sent Messages</h3>
+<pre><code class="lang-csharp">var pagination = new WhatsPro.Models.PaginationRequest
+{
+    Page = 1,
+    Limit = 100
+};
+
+var history = await client.Messages.ListAsync(pagination);
+
+foreach (var msg in history.Data.Data)
+{
+    Console.WriteLine($&quot;Sent to: {msg.Receiver}, Status: {msg.Status}&quot;);
+}
+</code></pre>
+<h3 id="deleting-messages-from-history">Deleting Messages from History</h3>
+<p>If you need to comply with GDPR or simply clean up your logs, you can delete message records.</p>
+<pre><code class="lang-csharp">var deleteReq = new WhatsPro.Models.DeleteRequest
+{
+    Ids = new List&lt;int&gt; { 54321, 54322 } // IDs of the message records
+};
+
+await client.Messages.DeleteAsync(deleteReq);
+</code></pre>
+<h2 id="uploading-documents">Uploading Documents</h2>
+<p>If you need to send a local file (like a generated PDF invoice) instead of a public URL, you must first upload the document to WhatsPro.</p>
+<pre><code class="lang-csharp">using var fileStream = System.IO.File.OpenRead(&quot;invoice-1024.pdf&quot;);
+
+// Upload the file
+var uploadResult = await client.Messages.UploadDocumentAsync(&quot;invoice-1024.pdf&quot;, fileStream);
+
+// Send the uploaded file URL in your message
+var request = new WhatsPro.Messages.Models.SendMessageRequest
+{
+    SendPhone = true,
+    Phones = new[] { &quot;+1234567890&quot; },
+    Message = &quot;Here is your invoice.&quot;,
+    FileUrl = uploadResult.Data.Url // Use the URL returned from the upload
+};
+
+await client.Messages.SendNonEncryptedAsync(request);
+</code></pre>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/AhmedSuror/WhatsPro.Net/blob/main/docs/Messages.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
