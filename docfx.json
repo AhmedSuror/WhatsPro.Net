@@ -32,14 +32,15 @@
       {
         "files": [
           "images/**",
-          "icon.png"
+          "favicon.png",
+          "logo.png"
         ]
       }
     ],
     "dest": "_site",
     "globalMetadata": {
-      "_appLogoPath": "icon.png",
-      "_appFaviconPath": "icon.png",
+      "_appLogoPath": "logo.png",
+      "_appFaviconPath": "favicon.png",
       "_appName": "WhatsPro.Net"
     },
     "globalMetadataFiles": [],
