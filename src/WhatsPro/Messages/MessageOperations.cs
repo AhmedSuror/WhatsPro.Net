@@ -21,17 +21,17 @@ public class MessageOperations
 
     public async Task<WhatsProResponse<PagedResponse<MessageInfo>>> ListAsync(PaginationRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<MessageInfo>>>("/messages/list", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<MessageInfo>>>("/user/messages/index", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<WhatsProResponse<MessageInfo>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.GetAsync<WhatsProResponse<MessageInfo>>($"/messages/get/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<MessageInfo>>($"/user/messages/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<WhatsProResponse<string>> DeleteAsync(DeleteRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<DeleteRequest, WhatsProResponse<string>>("/messages/delete", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<DeleteRequest, WhatsProResponse<string>>("/user/messages/delete", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<WhatsProResponse<string>> SendAsync(SendMessageRequest request, CancellationToken cancellationToken = default)
