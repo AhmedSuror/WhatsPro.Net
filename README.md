@@ -11,45 +11,41 @@ A non-official .NET SDK library for the Whats-Pro.net REST API.
 - **Sessions & Messages**: Connect multiple WhatsApp instances and send messages seamlessly.
 - **Multi-targeting**: Supports both `.NET Standard 2.0` and `.NET 4.8`.
 
-## Quick Start
+## Full SDK Usage Guide
 
-```csharp
-using WhatsPro;
+We provide a comprehensive, tutorial-style usage guide for all modules in the SDK:
+- [Introduction & Setup](docs/Introduction.md)
+- [Authentication](docs/Authentication.md)
+- [Messages](docs/Messages.md)
+- [Clients](docs/Clients.md)
+- [Groups](docs/Groups.md)
+- [Sessions](docs/Sessions.md)
+- [Dashboard](docs/Dashboard.md)
 
-var options = new WhatsProOptions
-{
-    BaseUrl = "https://whats-pro.net/backend/public/index.php/api",
-    Email = "your_email@example.com",
-    Password = "your_password"
-};
+## Generating and Publishing Documentation
 
-using var client = new WhatsProClient(options);
+This repository uses [DocFX](https://dotnet.github.io/docfx/) to generate a beautiful, interactive documentation site that includes both our **Usage Guides** and **API Reference**.
 
-// Automatically handles authentication & payload encryption
-var profile = await client.Auth.GetProfileAsync();
-Console.WriteLine($"Logged in as: {profile.Data.User.Name}");
+### Local Generation
+To build the documentation locally:
+1. Install DocFX: `dotnet tool update -g docfx`
+2. Run DocFX in the repository root: `docfx docfx.json --serve`
+3. Navigate to `http://localhost:8080` to view the site.
 
-// Send a message via the secure encrypted endpoint
-var encryptedRequest = new WhatsPro.Messages.Models.SendMessageRequest
-{
-    SendPhone = true,
-    Phones = ["+201010959716"],
-    Message = "Hello from secure endpoint!"
-};
-await client.Messages.SendAsync(encryptedRequest);
+### Publishing to GitHub Pages with a Custom Subdomain
 
-// Send a message via the unencrypted fallback endpoint
-// (Automatically fetches and uses your account's static ApiToken)
-var unencryptedRequest = new WhatsPro.Messages.Models.SendMessageRequest
-{
-    SendPhone = true,
-    Phones = ["01010959716"], // Or use full format like "+201010959716"
-    CountryCode = "EG", // Optional
-    Message = "Hello from unencrypted endpoint!",
-    ImgUrl = "https://example.com/image.png" // Optional
-};
-await client.Messages.SendNonEncryptedAsync(unencryptedRequest);
-```
+We recommend hosting your documentation on **GitHub Pages**, mapped to your custom subdomain (e.g., `docs.yourwebsite.com`).
+
+**Step 1: Set up a GitHub Action**
+You can create a GitHub Action (`.github/workflows/docs.yml`) that runs `docfx` and pushes the `_site` output to the `gh-pages` branch on every push to `main`.
+
+**Step 2: Configure your Custom Domain**
+1. Go to your repository **Settings** > **Pages**.
+2. Under **Build and deployment**, select "Deploy from a branch" and choose the `gh-pages` branch.
+3. Under **Custom domain**, enter your desired subdomain (e.g., `docs.whatspro.net`) and click **Save**. This will automatically create a `CNAME` commit in your `gh-pages` branch.
+4. Go to your domain registrar (e.g., GoDaddy, Cloudflare) and create a **CNAME record** pointing your subdomain (`docs`) to `<your-github-username>.github.io`.
+
+Once DNS propagation completes, your full SDK documentation will be live on your custom domain!
 
 ## Contributing
 Please see `CONTRIBUTING.md` for details on contributing to the project.
