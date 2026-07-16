@@ -39,8 +39,8 @@ public class DashboardOperations
     /// <summary>
     /// Gets the top numbers statistics.
     /// </summary>
-    public async Task<WhatsProResponse<List<object>>> GetTopNumbersAsync(int top, CancellationToken cancellationToken = default)
+    public async Task<WhatsProResponse<List<TopNumberItem>>> GetTopNumbersAsync(int top, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.GetAsync<WhatsProResponse<List<object>>>($"/user/top_numbers_chart?top={top}", skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<List<TopNumberItem>>>($"/user/top_numbers_chart?top={top}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 }

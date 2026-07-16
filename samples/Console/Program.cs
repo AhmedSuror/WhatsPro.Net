@@ -72,7 +72,7 @@ class Program
             Console.WriteLine("\n--- Menu ---");
             Console.WriteLine("1. Get Profile (Login implicitly)");
             Console.WriteLine("2. List Clients");
-            Console.WriteLine("3. Get Dashboard");
+            Console.WriteLine("3. Dashboard Menu");
             Console.WriteLine("4. Send Message (Encrypted)");
             Console.WriteLine("5. Send Message (Non-Encrypted)");
             Console.WriteLine("6. View API Token");
@@ -97,8 +97,38 @@ class Program
                         ConsoleDisplayHelper.PrintClients(clients.Data);
                         break;
                     case "3":
-                        var dashboard = await client.Dashboard.GetDashboardAsync();
-                        ConsoleDisplayHelper.PrintDashboard(dashboard.Data);
+                        Console.WriteLine("\n--- Dashboard Menu ---");
+                        Console.WriteLine("1. Dashboard Summary");
+                        Console.WriteLine("2. Send Chart");
+                        Console.WriteLine("3. Top Numbers");
+                        Console.Write("Choose an option: ");
+                        var dashChoice = Console.ReadLine();
+                        switch (dashChoice)
+                        {
+                            case "1":
+                                var dashboard = await client.Dashboard.GetDashboardAsync();
+                                ConsoleDisplayHelper.PrintDashboard(dashboard.Data);
+                                break;
+                            case "2":
+                                var currentYear = DateTime.Now.Year;
+                                var currentMonth = DateTime.Now.Month;
+                                var chartReq = new WhatsPro.Dashboard.Models.SendChartRequest
+                                {
+                                    Type = "month",
+                                    Year = currentYear,
+                                    Month = currentMonth
+                                };
+                                var chart = await client.Dashboard.GetSendChartAsync(chartReq);
+                                ConsoleDisplayHelper.PrintSendChart(chart.Data);
+                                break;
+                            case "3":
+                                var topNums = await client.Dashboard.GetTopNumbersAsync(6);
+                                ConsoleDisplayHelper.PrintTopNumbers(topNums.Data);
+                                break;
+                            default:
+                                Console.WriteLine("Invalid dashboard option.");
+                                break;
+                        }
                         break;
                     case "4":
                         Console.Write("Enter target phone number (e.g. 2010...): ");

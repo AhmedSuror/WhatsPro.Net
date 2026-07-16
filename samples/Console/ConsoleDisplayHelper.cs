@@ -192,6 +192,42 @@ internal static class ConsoleDisplayHelper
         Console.WriteLine();
     }
 
+    /// <summary>Prints send chart data.</summary>
+    public static void PrintSendChart(System.Collections.Generic.List<int> data)
+    {
+        Console.WriteLine();
+        PrintSectionHeader("Send Chart (Messages by Day)");
+        for (int i = 0; i < data.Count; i++)
+        {
+            var day = i + 1;
+            Write(LabelColor, $"  Day {day,2}: ");
+            Write(ValueColor, $"{data[i],5} msgs");
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+
+    /// <summary>Prints top numbers statistics.</summary>
+    public static void PrintTopNumbers(System.Collections.Generic.List<TopNumberItem> data)
+    {
+        Console.WriteLine();
+        PrintSectionHeader("Top Numbers");
+        
+        Write(LabelColor, $"  {"Phone / Name",-20}  {"Messages",-10}  {"Has Doc",-8}");
+        Console.WriteLine();
+        Write(BorderColor, "  " + new string(SectionChar, 20) + "  " + new string(SectionChar, 10) + "  " + new string(SectionChar, 8));
+        Console.WriteLine();
+
+        foreach (var num in data)
+        {
+            Write(ValueColor, $"  {Truncate(num.Name, 20),-20}  ");
+            Write(ValueColor, $"{num.Value,-10}  ");
+            Write(ValueColor, $"{(num.HasDocument ? "Yes" : "No"),-8}");
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+
     // =========================================================================
     // Private helpers
     // =========================================================================
