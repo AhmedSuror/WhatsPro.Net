@@ -73,7 +73,7 @@ class Program
             Console.WriteLine("1. Get Profile (Login implicitly)");
             Console.WriteLine("2. List Clients");
             Console.WriteLine("3. Dashboard Menu");
-            Console.WriteLine("4. Send Message (Encrypted)");
+            Console.WriteLine("4. Manage Messages (Encrypted)");
             Console.WriteLine("5. Send Message (Non-Encrypted)");
             Console.WriteLine("6. View API Token");
             Console.WriteLine("7. Sessions Menu");
@@ -131,18 +131,68 @@ class Program
                         }
                         break;
                     case "4":
-                        Console.Write("Enter target phone number (e.g. 2010...): ");
-                        var targetPhone = Console.ReadLine();
-                        Console.Write("Enter message text: ");
-                        var msgText = Console.ReadLine();
-                        var msgRequest = new Messages.Models.SendMessageRequest
+                        Console.WriteLine("\n--- Manage Messages (Encrypted) ---");
+                        Console.WriteLine("1. List Messages");
+                        Console.WriteLine("2. Get Message Details");
+                        Console.WriteLine("3. Delete Messages");
+                        Console.WriteLine("4. Send Message");
+                        Console.Write("Choose an option: ");
+                        var msgMenuChoice = Console.ReadLine();
+                        switch (msgMenuChoice)
                         {
-                            SendPhone = true,
-                            Phones = new System.Collections.Generic.List<string> { targetPhone! },
-                            Message = msgText!
-                        };
-                        var sendResult = await client.Messages.SendAsync(msgRequest);
-                        Console.WriteLine($"Success: Message sent. API says: {sendResult.Message}");
+                            case "1":
+                                Console.Write("Enter page number (default 1): ");
+                                var pageInput = Console.ReadLine();
+                                var pageNum = int.TryParse(pageInput, out int p) ? p : 1;
+                                var messages = await client.Messages.ListAsync(new PaginationRequest { Page = pageNum });
+                                if (messages.Data != null)
+                                    ConsoleDisplayHelper.PrintMessages(messages.Data);
+                                else
+                                    Console.WriteLine("No messages returned.");
+                                break;
+                            case "2":
+                                Console.Write("Enter Message ID: ");
+                                if (int.TryParse(Console.ReadLine(), out int msgId))
+                                {
+                                    var msgDetail = await client.Messages.GetAsync(msgId);
+                                    if (msgDetail.Data != null)
+                                        ConsoleDisplayHelper.PrintMessageDetail(msgDetail.Data);
+                                    else
+                                        Console.WriteLine($"No message found with ID {msgId}.");
+                                }
+                                else { Console.WriteLine("Invalid Message ID."); }
+                                break;
+                            case "3":
+                                Console.Write("Enter Message ID(s) to delete (comma-separated): ");
+                                var idsInput = Console.ReadLine();
+                                var deleteIds = new System.Collections.Generic.List<int>();
+                                foreach (var part in (idsInput ?? "").Split(','))
+                                {
+                                    if (int.TryParse(part.Trim(), out int did))
+                                        deleteIds.Add(did);
+                                }
+                                if (deleteIds.Count == 0) { Console.WriteLine("No valid IDs provided."); break; }
+                                var deleteResult = await client.Messages.DeleteAsync(new WhatsPro.Models.DeleteRequest { Ids = deleteIds });
+                                Console.WriteLine($"API says: {deleteResult.Message}");
+                                break;
+                            case "4":
+                                Console.Write("Enter target phone number (e.g. 2010...): ");
+                                var targetPhone = Console.ReadLine();
+                                Console.Write("Enter message text: ");
+                                var msgText = Console.ReadLine();
+                                var msgRequest = new Messages.Models.SendMessageRequest
+                                {
+                                    SendPhone = true,
+                                    Phones = new System.Collections.Generic.List<string> { targetPhone! },
+                                    Message = msgText!
+                                };
+                                var sendResult = await client.Messages.SendAsync(msgRequest);
+                                Console.WriteLine($"Success: Message sent. API says: {sendResult.Message}");
+                                break;
+                            default:
+                                Console.WriteLine("Invalid option.");
+                                break;
+                        }
                         break;
                     case "5":
                         Console.WriteLine("\n--- Send Non-Encrypted Message ---");

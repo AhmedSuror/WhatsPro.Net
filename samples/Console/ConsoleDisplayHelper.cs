@@ -228,6 +228,71 @@ internal static class ConsoleDisplayHelper
         Console.WriteLine();
     }
 
+    /// <summary>Prints a formatted table of messages with pagination info.</summary>
+    public static void PrintMessages(WhatsPro.Models.PagedResponse<WhatsPro.Messages.Models.MessageInfo> paged)
+    {
+        Console.WriteLine();
+        Write(SectionColor, $"── Messages ");
+        Write(ConsoleColor.Gray, $"({paged.Total} total, page {paged.CurrentPage}/{paged.LastPage})");
+        Console.WriteLine();
+
+        Write(LabelColor, $"  {"ID",-10}  {"To",-16}  {"Status",-10}  {"Channel",-10}  Message");
+        Console.WriteLine();
+        Write(BorderColor, "  " + new string(SectionChar, 10) + "  " + new string(SectionChar, 16) + "  " + new string(SectionChar, 10) + "  " + new string(SectionChar, 10) + "  " + new string(SectionChar, 28));
+        Console.WriteLine();
+
+        foreach (var m in paged.Data)
+        {
+            Write(NullColor,  $"  [{m.Id,-8}]  ");
+            Write(ValueColor, $"{Truncate(m.To, 16),-16}  ");
+
+            var statusColor = m.Status switch
+            {
+                "read"      => ConsoleColor.Green,
+                "delivered" => ConsoleColor.Cyan,
+                "sent"      => ConsoleColor.Yellow,
+                _           => ConsoleColor.DarkGray
+            };
+            Write(statusColor, $"{m.Status,-10}  ");
+            Write(ConsoleColor.DarkMagenta, $"{m.Channel,-10}  ");
+            Write(ValueColor, Truncate(m.Message, 28));
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+    }
+
+    /// <summary>Prints all fields of a single MessageInfo.</summary>
+    public static void PrintMessageDetail(WhatsPro.Messages.Models.MessageInfo m)
+    {
+        PrintDoubleBorder();
+        PrintCenteredHeader("✉  Message Details");
+        PrintDoubleBorder();
+        Console.WriteLine();
+
+        PrintSectionHeader("Message");
+        PrintField("ID",          m.Id.ToString());
+        PrintField("Message ID",  m.MessageId);
+        PrintField("From",        m.From);
+        PrintField("To",          m.To);
+        PrintField("Channel",     m.Channel);
+        PrintField("Status",      m.Status);
+        PrintField("Created At",  m.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss"));
+        PrintField("Updated At",  m.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"));
+        Console.WriteLine();
+
+        PrintSectionHeader("Content");
+        PrintField("Text",        m.Message);
+        PrintField("Image URL",   m.ImgUrl);
+        PrintField("Has Document",m.HasDocument ? "Yes" : "No");
+        PrintField("Doc Name",    m.DocumentName);
+        PrintField("Doc MIME",    m.DocumentMime);
+
+        Console.WriteLine();
+        PrintDoubleBorder();
+        Console.WriteLine();
+    }
+
     // =========================================================================
     // Private helpers
     // =========================================================================
