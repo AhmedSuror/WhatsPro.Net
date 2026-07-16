@@ -227,9 +227,27 @@ class Program
                                         if (result.Data != null && !string.IsNullOrEmpty(result.Data.Qr))
                                         {
                                             if (result.Data.Qr == "connected" || result.Data.Qr == "qr")
+                                            {
                                                 Console.WriteLine($"Status: {result.Data.Qr}");
+                                            }
                                             else
-                                                Console.WriteLine($"QR Code data length: {result.Data.Qr.Length}");
+                                            {
+                                                Console.WriteLine($"QR Code received. Attempting to open...");
+                                                try
+                                                {
+                                                    string base64 = result.Data.Qr.Replace("data:image/png;base64,", "");
+                                                    byte[] imageBytes = Convert.FromBase64String(base64);
+                                                    string filePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"qr_{cId}.png");
+                                                    System.IO.File.WriteAllBytes(filePath, imageBytes);
+                                                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(filePath) { UseShellExecute = true });
+                                                    Console.WriteLine($"Opened QR Code from {filePath}");
+                                                }
+                                                catch (Exception ex)
+                                                {
+                                                    Console.WriteLine($"Failed to open QR Code: {ex.Message}");
+                                                    Console.WriteLine($"QR Code data length: {result.Data.Qr.Length}");
+                                                }
+                                            }
                                         }
                                     }
                                     else { Console.WriteLine("API returned null response."); }
