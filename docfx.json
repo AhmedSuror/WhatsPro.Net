@@ -39,7 +39,6 @@
     ],
     "dest": "_site",
     "globalMetadata": {
-      "_appLogoPath": "logo.png",
       "_appFaviconPath": "favicon.png",
       "_appName": "WhatsPro.Net"
     },
