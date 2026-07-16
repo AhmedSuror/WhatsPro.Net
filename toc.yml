@@ -1,5 +1,5 @@
-- name: Articles
-  href: docs/
-- name: API Documentation
-  href: api/
-  homepage: api/index.md
+- name: Core SDK Articles
+  href: docs/CoreSDK/articles/
+- name: Core SDK API Documentation
+  href: docs/CoreSDK/api/
+  homepage: docs/CoreSDK/api/index.md

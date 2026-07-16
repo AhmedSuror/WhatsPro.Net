@@ -8,19 +8,14 @@
           ]
         }
       ],
-      "dest": "api"
+      "dest": "docs/CoreSDK/api"
     }
   ],
   "build": {
     "content": [
       {
         "files": [
-          "api/**.yml",
-          "api/index.md"
-        ]
-      },
-      {
-        "files": [
+          "docs/**.yml",
           "docs/**.md",
           "docs/**/toc.yml",
           "toc.yml",
@@ -36,11 +31,17 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "icon.png"
         ]
       }
     ],
     "dest": "_site",
+    "globalMetadata": {
+      "_appLogoPath": "icon.png",
+      "_appFaviconPath": "icon.png",
+      "_appName": "WhatsPro.Net"
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [

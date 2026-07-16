@@ -14,13 +14,13 @@ A non-official .NET SDK library for the Whats-Pro.net REST API.
 ## Full SDK Usage Guide
 
 We provide a comprehensive, tutorial-style usage guide for all modules in the SDK:
-- [Introduction & Setup](docs/Introduction.md)
-- [Authentication](docs/Authentication.md)
-- [Messages](docs/Messages.md)
-- [Clients](docs/Clients.md)
-- [Groups](docs/Groups.md)
-- [Sessions](docs/Sessions.md)
-- [Dashboard](docs/Dashboard.md)
+- [Introduction & Setup](docs/CoreSDK/articles/Introduction.md)
+- [Authentication](docs/CoreSDK/articles/Authentication.md)
+- [Messages](docs/CoreSDK/articles/Messages.md)
+- [Clients](docs/CoreSDK/articles/Clients.md)
+- [Groups](docs/CoreSDK/articles/Groups.md)
+- [Sessions](docs/CoreSDK/articles/Sessions.md)
+- [Dashboard](docs/CoreSDK/articles/Dashboard.md)
 
 ## Generating and Publishing Documentation
 
