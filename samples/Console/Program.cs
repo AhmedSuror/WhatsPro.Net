@@ -76,7 +76,8 @@ class Program
             Console.WriteLine("4. Send Message (Encrypted)");
             Console.WriteLine("5. Send Message (Non-Encrypted)");
             Console.WriteLine("6. View API Token");
-            Console.WriteLine("7. Exit");
+            Console.WriteLine("7. Sessions Menu");
+            Console.WriteLine("8. Exit");
             Console.Write("Choose an option: ");
             var choice = Console.ReadLine();
 
@@ -188,6 +189,90 @@ class Program
                         Console.WriteLine($"Your API Token is: {token}");
                         break;
                     case "7":
+                        Console.WriteLine("\n--- Sessions Menu ---");
+                        Console.WriteLine("1. List Sessions");
+                        Console.WriteLine("2. Get Session by ID");
+                        Console.WriteLine("3. Connect Session");
+                        Console.WriteLine("4. Disconnect Session");
+                        Console.WriteLine("5. Change Session Name");
+                        Console.WriteLine("6. Set Webhook URL");
+                        Console.Write("Choose an option: ");
+                        var sessionChoice = Console.ReadLine();
+                        switch (sessionChoice)
+                        {
+                            case "1":
+                                var sessions = await client.Sessions.ListAsync(new PaginationRequest());
+                                ConsoleDisplayHelper.PrintSessions(sessions.Data);
+                                break;
+                            case "2":
+                                Console.Write("Enter Session ID: ");
+                                if (int.TryParse(Console.ReadLine(), out int sessionId))
+                                {
+                                    var session = await client.Sessions.GetAsync(sessionId);
+                                    if (session != null && session.Data != null)
+                                        Console.WriteLine($"Session: {session.Data.Name} - Status: {session.Data.Status}");
+                                    else
+                                        Console.WriteLine($"Failed to get session: {session?.Message ?? "No response"}");
+                                }
+                                else { Console.WriteLine("Invalid Session ID."); }
+                                break;
+                            case "3":
+                                Console.Write("Enter Session ID to Connect: ");
+                                if (int.TryParse(Console.ReadLine(), out int cId))
+                                {
+                                    var result = await client.Sessions.ConnectAsync(cId);
+                                    if (result != null)
+                                    {
+                                        Console.WriteLine($"API says: {result.Message}");
+                                        if (result.Data != null && !string.IsNullOrEmpty(result.Data.Qr))
+                                        {
+                                            if (result.Data.Qr == "connected" || result.Data.Qr == "qr")
+                                                Console.WriteLine($"Status: {result.Data.Qr}");
+                                            else
+                                                Console.WriteLine($"QR Code data length: {result.Data.Qr.Length}");
+                                        }
+                                    }
+                                    else { Console.WriteLine("API returned null response."); }
+                                }
+                                else { Console.WriteLine("Invalid Session ID."); }
+                                break;
+                            case "4":
+                                Console.Write("Enter Session ID to Disconnect: ");
+                                if (int.TryParse(Console.ReadLine(), out int dId))
+                                {
+                                    Console.Write("Disconnect forever? (y/n): ");
+                                    bool forever = Console.ReadLine()?.Trim().ToLower() == "y";
+                                    var result = await client.Sessions.DisconnectAsync(dId, forever);
+                                    Console.WriteLine($"API says: {result?.Message ?? "Null response"}");
+                                }
+                                else { Console.WriteLine("Invalid Session ID."); }
+                                break;
+                            case "5":
+                                Console.Write("Enter Session ID to Change Name: ");
+                                if (int.TryParse(Console.ReadLine(), out int cnId))
+                                {
+                                    var result = await client.Sessions.ChangeNameAsync(cnId);
+                                    Console.WriteLine($"API says: {result?.Message ?? "Null response"}");
+                                }
+                                else { Console.WriteLine("Invalid Session ID."); }
+                                break;
+                            case "6":
+                                Console.Write("Enter Session ID to Set Webhook: ");
+                                if (int.TryParse(Console.ReadLine(), out int wId))
+                                {
+                                    Console.Write("Enter new Webhook URL: ");
+                                    var wUrl = Console.ReadLine();
+                                    var result = await client.Sessions.SetWebhookAsync(wId, new WhatsPro.Sessions.Models.SetWebhookRequest { Url = wUrl ?? string.Empty });
+                                    Console.WriteLine($"API says: {result?.Message ?? "Null response (Silent fail)"}");
+                                }
+                                else { Console.WriteLine("Invalid Session ID."); }
+                                break;
+                            default:
+                                Console.WriteLine("Invalid session option.");
+                                break;
+                        }
+                        break;
+                    case "8":
                         return;
                     default:
                         Console.WriteLine("Invalid option.");

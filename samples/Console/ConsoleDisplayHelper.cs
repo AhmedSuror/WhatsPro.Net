@@ -130,6 +130,32 @@ internal static class ConsoleDisplayHelper
         Console.WriteLine();
     }
 
+    /// <summary>Prints a formatted table of sessions with pagination info.</summary>
+    public static void PrintSessions(PagedResponse<WhatsPro.Sessions.Models.SessionInfo> paged)
+    {
+        Console.WriteLine();
+        Write(SectionColor, $"── Sessions ");
+        Write(ConsoleColor.Gray, $"({paged.Total} total, page {paged.CurrentPage}/{paged.LastPage})");
+        Console.WriteLine();
+
+        // Table header
+        Write(LabelColor, $"  {"ID",-6}  {"Name",-16}  {"Phone",-16}  Status");
+        Console.WriteLine();
+        Write(BorderColor, "  " + new string(SectionChar, 6) + "  " + new string(SectionChar, 16) + "  " + new string(SectionChar, 16) + "  " + new string(SectionChar, 12));
+        Console.WriteLine();
+
+        foreach (var s in paged.Data)
+        {
+            Write(NullColor,  $"  [{s.Id,-4}]  ");
+            Write(ValueColor, $"{Truncate(s.Name, 16),-16}  ");
+            Write(ValueColor, $"{Truncate(string.IsNullOrEmpty(s.Phone) ? "—" : s.Phone, 16),-16}  ");
+            Write(ValueColor, $"{s.Status}");
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+    }
+
     /// <summary>Prints dashboard cards and percentage statistics.</summary>
     public static void PrintDashboard(DashboardResponse data)
     {
