@@ -180,10 +180,86 @@ internal class WhatsProHttpClient : IDisposable
 
     private async Task<TResponse> ProcessResponseAsync<TResponse>(HttpResponseMessage response, CancellationToken cancellationToken)
     {
+        string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
         if (response.StatusCode == (System.Net.HttpStatusCode)422)
         {
-            string errorJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            throw new ValidationException($"Validation failed (422): {errorJson}");
+            string errorMessage = $"Validation failed (422): {json}";
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
+                if (doc.RootElement.TryGetProperty("errors", out var errorsProp) && errorsProp.ValueKind == JsonValueKind.Object)
+                {
+                    var errorMessages = new System.Collections.Generic.List<string>();
+                    foreach (var property in errorsProp.EnumerateObject())
+                    {
+                        if (property.Value.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (var error in property.Value.EnumerateArray())
+                            {
+                                string errStr = error.GetString() ?? string.Empty;
+                                if (!string.IsNullOrEmpty(errStr))
+                                    errorMessages.Add(errStr);
+                            }
+                        }
+                    }
+                    if (errorMessages.Count > 0)
+                    {
+                        errorMessage = string.Join(" ", errorMessages);
+                    }
+                }
+                else if (doc.RootElement.TryGetProperty("message", out var msgProp))
+                {
+                    errorMessage = msgProp.GetString() ?? errorMessage;
+                }
+            }
+            catch { }
+
+            throw new ValidationException(errorMessage);
+        }
+
+        string decryptedJson = string.Empty;
+        if (!string.IsNullOrEmpty(json))
+        {
+            try 
+            {
+                using var doc = JsonDocument.Parse(json);
+                if (doc.RootElement.TryGetProperty("payload", out var payloadElement))
+                {
+                    string encryptedPayload = payloadElement.GetString() ?? string.Empty;
+                    decryptedJson = PayloadEncryptor.Decrypt(encryptedPayload, _options.EncryptionKey);
+                }
+                else
+                {
+                    decryptedJson = json; // not encrypted
+                }
+            }
+            catch (JsonException)
+            {
+                try
+                {
+                    decryptedJson = PayloadEncryptor.Decrypt(json, _options.EncryptionKey);
+                }
+                catch
+                {
+                    decryptedJson = json;
+                }
+            }
+        }
+
+        TResponse result = default!;
+        if (!string.IsNullOrEmpty(decryptedJson))
+        {
+            try
+            {
+                result = JsonSerializer.Deserialize<TResponse>(decryptedJson, JsonOptions.Default)!;
+            }
+            catch { }
+        }
+
+        if (result is IWhatsProResponse apiResponse && !apiResponse.Success)
+        {
+            throw new ApiException(apiResponse.Message ?? "The API returned an unsuccessful response.");
         }
 
         try
@@ -192,45 +268,12 @@ internal class WhatsProHttpClient : IDisposable
         }
         catch (HttpRequestException ex)
         {
-            throw new NetworkException($"HTTP request failed with status code {response.StatusCode}.", ex);
+            string details = string.IsNullOrEmpty(decryptedJson) ? json : decryptedJson;
+            throw new NetworkException($"HTTP request failed with status code {response.StatusCode}. Details: {details}", ex);
         }
 
-        string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-        
-#if NET48 || NETSTANDARD2_0
-        if (string.IsNullOrEmpty(json))
+        if (result == null)
             return default!;
-#endif
-        
-        string decryptedJson;
-        try 
-        {
-            using var doc = JsonDocument.Parse(json);
-            if (doc.RootElement.TryGetProperty("payload", out var payloadElement))
-            {
-                string encryptedPayload = payloadElement.GetString() ?? string.Empty;
-                decryptedJson = PayloadEncryptor.Decrypt(encryptedPayload, _options.EncryptionKey);
-            }
-            else
-            {
-                decryptedJson = json; // not encrypted
-            }
-        }
-        catch (JsonException)
-        {
-            // It might be a plain encrypted string
-            decryptedJson = PayloadEncryptor.Decrypt(json, _options.EncryptionKey);
-        }
-
-        if (string.IsNullOrEmpty(decryptedJson))
-            return default!;
-
-        var result = JsonSerializer.Deserialize<TResponse>(decryptedJson, JsonOptions.Default)!;
-
-        if (result is IWhatsProResponse apiResponse && !apiResponse.Success)
-        {
-            throw new ApiException(apiResponse.Message ?? "The API returned an unsuccessful response.");
-        }
 
         return result;
     }
