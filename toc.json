@@ -1,2 +1,2 @@
 
-{"items":[{"name":"Articles","href":"docs/Introduction.html","tocHref":"docs/toc.html","topicHref":"docs/Introduction.html"},{"name":"API Documentation","href":"api/index.html","tocHref":"api/toc.html","topicHref":"api/index.html","homepage":"api/index.html"}]}
+{"items":[{"name":"Core SDK Articles","href":"docs/CoreSDK/articles/Introduction.html","tocHref":"docs/CoreSDK/articles/toc.html","topicHref":"docs/CoreSDK/articles/Introduction.html"},{"name":"Core SDK API Documentation","href":"docs/CoreSDK/api/index.html","tocHref":"docs/CoreSDK/api/toc.html","topicHref":"docs/CoreSDK/api/index.html","homepage":"docs/CoreSDK/api/index.html"}]}
