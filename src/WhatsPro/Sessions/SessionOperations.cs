@@ -21,7 +21,7 @@ public class SessionOperations
 
     public async Task<WhatsProResponse<PagedResponse<SessionInfo>>> ListAsync(PaginationRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<SessionInfo>>>("/sessions/list", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<SessionInfo>>>("/sessions/index", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<WhatsProResponse<SessionInfo>> ConnectAsync(int id, CancellationToken cancellationToken = default)
@@ -31,18 +31,17 @@ public class SessionOperations
 
     public async Task<WhatsProResponse<string>> DisconnectAsync(int id, bool forever, CancellationToken cancellationToken = default)
     {
-        var request = new { Forever = forever };
-        return await _httpClient.PostAsync<object, WhatsProResponse<string>>($"/sessions/disconnect/{id}", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<string>>($"/sessions/disconnect/{id}?forever={forever.ToString().ToLower()}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<WhatsProResponse<SessionInfo>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.GetAsync<WhatsProResponse<SessionInfo>>($"/sessions/get/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<SessionInfo>>($"/sessions/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<WhatsProResponse<string>> ChangeNameAsync(int id, ChangeNameRequest request, CancellationToken cancellationToken = default)
+    public async Task<WhatsProResponse<string>> ChangeNameAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<ChangeNameRequest, WhatsProResponse<string>>($"/sessions/change_name/{id}", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<string>>($"/sessions/change_name/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<WhatsProResponse<string>> SetWebhookAsync(int id, SetWebhookRequest request, CancellationToken cancellationToken = default)
