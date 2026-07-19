@@ -130,6 +130,55 @@ internal static class ConsoleDisplayHelper
         Console.WriteLine();
     }
 
+    /// <summary>Prints all fields of a single ClientInfo, including phones and group details.</summary>
+    public static void PrintClientDetail(WhatsPro.Clients.Models.ClientInfo c)
+    {
+        PrintDoubleBorder();
+        PrintCenteredHeader("👤  Client Details");
+        PrintDoubleBorder();
+        Console.WriteLine();
+
+        PrintSectionHeader("Client");
+        PrintField("ID",          c.Id.ToString());
+        PrintField("Name",        c.Name);
+        PrintField("Phone",       c.Phone);
+        PrintField("Notes",       c.Notes);
+        PrintField("Phones Count",c.PhonesCount.ToString());
+        PrintField("Created At",  c.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss"));
+        PrintField("Updated At",  c.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"));
+        Console.WriteLine();
+
+        if (c.Group != null)
+        {
+            PrintSectionHeader("Group Info");
+            PrintField("Group ID",   c.Group.Id.ToString());
+            PrintField("Group Name", c.Group.Name);
+            PrintField("Group Notes",c.Group.Notes);
+            Console.WriteLine();
+        }
+
+        if (c.Phones != null && c.Phones.Count > 0)
+        {
+            PrintSectionHeader("Extra Phones");
+            Write(LabelColor, $"  {"ID",-8}  {"Phone",-16}  {"Default",-8}");
+            Console.WriteLine();
+            Write(BorderColor, "  " + new string(SectionChar, 8) + "  " + new string(SectionChar, 16) + "  " + new string(SectionChar, 8));
+            Console.WriteLine();
+
+            foreach (var p in c.Phones)
+            {
+                Write(NullColor,  $"  [{p.Id,-6}]  ");
+                Write(ValueColor, $"{Truncate(p.Phone, 16),-16}  ");
+                Write(ValueColor, $"{(p.Default ? "Yes" : "No"),-8}");
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
+        PrintDoubleBorder();
+        Console.WriteLine();
+    }
+
     /// <summary>Prints a formatted table of sessions with pagination info.</summary>
     public static void PrintSessions(PagedResponse<WhatsPro.Sessions.Models.SessionInfo> paged)
     {

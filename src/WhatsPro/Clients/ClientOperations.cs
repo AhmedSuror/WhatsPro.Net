@@ -28,7 +28,7 @@ public class ClientOperations
     /// <returns>A paginated response containing client information.</returns>
     public async Task<WhatsProResponse<PagedResponse<ClientInfo>>> ListAsync(PaginationRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<ClientInfo>>>("/clients/list", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<ClientInfo>>>("/clients/index", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class ClientOperations
     /// <returns>A response containing the ID of the newly created client.</returns>
     public async Task<WhatsProResponse<CreateClientResponse>> CreateAsync(CreateClientRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<CreateClientRequest, WhatsProResponse<CreateClientResponse>>("/clients/create", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<CreateClientRequest, WhatsProResponse<CreateClientResponse>>("/clients", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class ClientOperations
     /// <returns>Detailed information about the requested client.</returns>
     public async Task<WhatsProResponse<ClientInfo>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.GetAsync<WhatsProResponse<ClientInfo>>($"/clients/get/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<ClientInfo>>($"/clients/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class ClientOperations
     /// <returns>A response indicating success or failure of the update operation.</returns>
     public async Task<WhatsProResponse<string>> UpdateAsync(int id, UpdateClientRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<UpdateClientRequest, WhatsProResponse<string>>($"/clients/update/{id}", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PutAsync<UpdateClientRequest, WhatsProResponse<string>>($"/clients/{id}", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ public class ClientOperations
     /// <returns>A response indicating the success of adding phone numbers.</returns>
     public async Task<WhatsProResponse<string>> AddPhoneAsync(AddPhoneRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<AddPhoneRequest, WhatsProResponse<string>>("/clients/phones/add", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<AddPhoneRequest, WhatsProResponse<string>>("/phones", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>

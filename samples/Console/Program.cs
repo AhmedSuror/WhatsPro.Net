@@ -71,7 +71,7 @@ class Program
         {
             Console.WriteLine("\n--- Menu ---");
             Console.WriteLine("1. Get Profile (Login implicitly)");
-            Console.WriteLine("2. List Clients");
+            Console.WriteLine("2. Clients Menu");
             Console.WriteLine("3. Dashboard Menu");
             Console.WriteLine("4. Manage Messages (Encrypted)");
             Console.WriteLine("5. Send Message (Non-Encrypted)");
@@ -93,8 +93,157 @@ class Program
                             Console.WriteLine("Profile retrieved but user data was unavailable.");
                         break;
                     case "2":
-                        var clients = await client.Clients.ListAsync(new PaginationRequest());
-                        ConsoleDisplayHelper.PrintClients(clients.Data);
+                        Console.WriteLine("\n--- Clients Menu ---");
+                        Console.WriteLine("1. List Clients");
+                        Console.WriteLine("2. Get Client by ID");
+                        Console.WriteLine("3. Create Client");
+                        Console.WriteLine("4. Update Client");
+                        Console.WriteLine("5. Delete Client(s)");
+                        Console.WriteLine("6. Add Extra Phone");
+                        Console.WriteLine("7. Change Group");
+                        Console.WriteLine("8. Import From Excel");
+                        Console.Write("Choose an option: ");
+                        var clientChoice = Console.ReadLine();
+                        switch (clientChoice)
+                        {
+                            case "1":
+                                Console.Write("Enter page number (default 1): ");
+                                var pageInput = Console.ReadLine();
+                                var pageNum = int.TryParse(pageInput, out int p) ? p : 1;
+                                var clients = await client.Clients.ListAsync(new PaginationRequest { Page = pageNum });
+                                if (clients.Data != null)
+                                    ConsoleDisplayHelper.PrintClients(clients.Data);
+                                else
+                                    Console.WriteLine("No clients returned.");
+                                break;
+                            case "2":
+                                Console.Write("Enter Client ID: ");
+                                if (int.TryParse(Console.ReadLine(), out int clientId))
+                                {
+                                    var clientInfo = await client.Clients.GetAsync(clientId);
+                                    if (clientInfo.Data != null)
+                                        ConsoleDisplayHelper.PrintClientDetail(clientInfo.Data);
+                                    else
+                                        Console.WriteLine($"No client found with ID {clientId}.");
+                                }
+                                else { Console.WriteLine("Invalid Client ID."); }
+                                break;
+                            case "3":
+                                Console.Write("Enter Phone (e.g. +2010...): ");
+                                var cPhone = Console.ReadLine() ?? "";
+                                Console.Write("Enter Name: ");
+                                var cName = Console.ReadLine() ?? "";
+                                Console.Write("Enter Group ID: ");
+                                int cGroupId = int.TryParse(Console.ReadLine(), out int cgid) ? cgid : 0;
+                                Console.Write("Enter Notes (optional): ");
+                                var cNotes = Console.ReadLine();
+                                
+                                var createReq = new WhatsPro.Clients.Models.CreateClientRequest
+                                {
+                                    Phone = cPhone,
+                                    Name = cName,
+                                    GroupId = cGroupId,
+                                    Notes = cNotes
+                                };
+                                var createRes = await client.Clients.CreateAsync(createReq);
+                                Console.WriteLine($"API says: {createRes.Message}");
+                                break;
+                            case "4":
+                                Console.Write("Enter Client ID to Update: ");
+                                if (int.TryParse(Console.ReadLine(), out int uId))
+                                {
+                                    Console.Write("Enter Name: ");
+                                    var uName = Console.ReadLine() ?? "";
+                                    Console.Write("Enter Phone: ");
+                                    var uPhone = Console.ReadLine() ?? "";
+                                    Console.Write("Enter Group ID: ");
+                                    int uGroupId = int.TryParse(Console.ReadLine(), out int ugid) ? ugid : 0;
+                                    Console.Write("Enter Notes (optional): ");
+                                    var uNotes = Console.ReadLine();
+
+                                    var updateReq = new WhatsPro.Clients.Models.UpdateClientRequest
+                                    {
+                                        Name = uName,
+                                        Phone = uPhone,
+                                        GroupId = uGroupId,
+                                        Notes = uNotes
+                                    };
+                                    var updateRes = await client.Clients.UpdateAsync(uId, updateReq);
+                                    Console.WriteLine($"API says: {updateRes.Message}");
+                                }
+                                else { Console.WriteLine("Invalid Client ID."); }
+                                break;
+                            case "5":
+                                Console.Write("Enter Client ID(s) to delete (comma-separated): ");
+                                var dIdsInput = Console.ReadLine();
+                                var deleteClientIds = new System.Collections.Generic.List<int>();
+                                foreach (var part in (dIdsInput ?? "").Split(','))
+                                {
+                                    if (int.TryParse(part.Trim(), out int did))
+                                        deleteClientIds.Add(did);
+                                }
+                                if (deleteClientIds.Count == 0) { Console.WriteLine("No valid IDs provided."); break; }
+                                var deleteRes = await client.Clients.DeleteAsync(new WhatsPro.Models.DeleteRequest { Ids = deleteClientIds });
+                                Console.WriteLine($"API says: {deleteRes.Message}");
+                                break;
+                            case "6":
+                                Console.Write("Enter Client ID to add phone to: ");
+                                if (int.TryParse(Console.ReadLine(), out int pClientId))
+                                {
+                                    Console.Write("Enter Extra Phone Number: ");
+                                    var pPhone = Console.ReadLine() ?? "";
+                                    var addPhoneReq = new WhatsPro.Clients.Models.AddPhoneRequest
+                                    {
+                                        ClientId = pClientId,
+                                        Phone = pPhone
+                                    };
+                                    var addPhoneRes = await client.Clients.AddPhoneAsync(addPhoneReq);
+                                    Console.WriteLine($"API says: {addPhoneRes.Message}");
+                                }
+                                else { Console.WriteLine("Invalid Client ID."); }
+                                break;
+                            case "7":
+                                Console.Write("Enter Client ID(s) to change group (comma-separated): ");
+                                var cIdsInput = Console.ReadLine();
+                                var changeIds = new System.Collections.Generic.List<int>();
+                                foreach (var part in (cIdsInput ?? "").Split(','))
+                                {
+                                    if (int.TryParse(part.Trim(), out int cid))
+                                        changeIds.Add(cid);
+                                }
+                                if (changeIds.Count == 0) { Console.WriteLine("No valid IDs provided."); break; }
+                                Console.Write("Enter Target Group ID: ");
+                                if (int.TryParse(Console.ReadLine(), out int tGroupId))
+                                {
+                                    var changeGroupReq = new WhatsPro.Clients.Models.ChangeGroupRequest
+                                    {
+                                        Ids = changeIds,
+                                        GroupId = tGroupId
+                                    };
+                                    var changeRes = await client.Clients.ChangeGroupAsync(changeGroupReq);
+                                    Console.WriteLine($"API says: {changeRes.Message}");
+                                }
+                                else { Console.WriteLine("Invalid Target Group ID."); }
+                                break;
+                            case "8":
+                                Console.Write("Enter path to Excel file: ");
+                                var excelPath = Console.ReadLine()?.Trim('"');
+                                if (string.IsNullOrWhiteSpace(excelPath) || !System.IO.File.Exists(excelPath))
+                                {
+                                    Console.WriteLine($"File not found: {excelPath}");
+                                    break;
+                                }
+                                Console.WriteLine("Uploading Excel file...");
+                                using (var stream = System.IO.File.OpenRead(excelPath))
+                                {
+                                    var importRes = await client.Clients.ImportFromExcelAsync(stream);
+                                    Console.WriteLine($"API says: {importRes.Message}");
+                                }
+                                break;
+                            default:
+                                Console.WriteLine("Invalid client option.");
+                                break;
+                        }
                         break;
                     case "3":
                         Console.WriteLine("\n--- Dashboard Menu ---");
