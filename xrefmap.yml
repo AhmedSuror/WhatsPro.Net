@@ -2041,12 +2041,12 @@ references:
   isSpec: "True"
   fullName: WhatsPro.Groups.GroupOperations.DeleteAsync
   nameWithType: GroupOperations.DeleteAsync
-- uid: WhatsPro.Groups.GroupOperations.DeleteClientsAsync(WhatsPro.Models.DeleteRequest,System.Threading.CancellationToken)
-  name: DeleteClientsAsync(DeleteRequest, CancellationToken)
-  href: docs/CoreSDK/api/WhatsPro.Groups.GroupOperations.html#WhatsPro_Groups_GroupOperations_DeleteClientsAsync_WhatsPro_Models_DeleteRequest_System_Threading_CancellationToken_
-  commentId: M:WhatsPro.Groups.GroupOperations.DeleteClientsAsync(WhatsPro.Models.DeleteRequest,System.Threading.CancellationToken)
-  fullName: WhatsPro.Groups.GroupOperations.DeleteClientsAsync(WhatsPro.Models.DeleteRequest, System.Threading.CancellationToken)
-  nameWithType: GroupOperations.DeleteClientsAsync(DeleteRequest, CancellationToken)
+- uid: WhatsPro.Groups.GroupOperations.DeleteClientsAsync(WhatsPro.Groups.Models.DeleteGroupClientsRequest,System.Threading.CancellationToken)
+  name: DeleteClientsAsync(DeleteGroupClientsRequest, CancellationToken)
+  href: docs/CoreSDK/api/WhatsPro.Groups.GroupOperations.html#WhatsPro_Groups_GroupOperations_DeleteClientsAsync_WhatsPro_Groups_Models_DeleteGroupClientsRequest_System_Threading_CancellationToken_
+  commentId: M:WhatsPro.Groups.GroupOperations.DeleteClientsAsync(WhatsPro.Groups.Models.DeleteGroupClientsRequest,System.Threading.CancellationToken)
+  fullName: WhatsPro.Groups.GroupOperations.DeleteClientsAsync(WhatsPro.Groups.Models.DeleteGroupClientsRequest, System.Threading.CancellationToken)
+  nameWithType: GroupOperations.DeleteClientsAsync(DeleteGroupClientsRequest, CancellationToken)
 - uid: WhatsPro.Groups.GroupOperations.DeleteClientsAsync*
   name: DeleteClientsAsync
   href: docs/CoreSDK/api/WhatsPro.Groups.GroupOperations.html#WhatsPro_Groups_GroupOperations_DeleteClientsAsync_
@@ -2195,6 +2195,25 @@ references:
   isSpec: "True"
   fullName: WhatsPro.Groups.Models.CreateGroupResponse.Message
   nameWithType: CreateGroupResponse.Message
+- uid: WhatsPro.Groups.Models.DeleteGroupClientsRequest
+  name: DeleteGroupClientsRequest
+  href: docs/CoreSDK/api/WhatsPro.Groups.Models.DeleteGroupClientsRequest.html
+  commentId: T:WhatsPro.Groups.Models.DeleteGroupClientsRequest
+  fullName: WhatsPro.Groups.Models.DeleteGroupClientsRequest
+  nameWithType: DeleteGroupClientsRequest
+- uid: WhatsPro.Groups.Models.DeleteGroupClientsRequest.Ids
+  name: Ids
+  href: docs/CoreSDK/api/WhatsPro.Groups.Models.DeleteGroupClientsRequest.html#WhatsPro_Groups_Models_DeleteGroupClientsRequest_Ids
+  commentId: P:WhatsPro.Groups.Models.DeleteGroupClientsRequest.Ids
+  fullName: WhatsPro.Groups.Models.DeleteGroupClientsRequest.Ids
+  nameWithType: DeleteGroupClientsRequest.Ids
+- uid: WhatsPro.Groups.Models.DeleteGroupClientsRequest.Ids*
+  name: Ids
+  href: docs/CoreSDK/api/WhatsPro.Groups.Models.DeleteGroupClientsRequest.html#WhatsPro_Groups_Models_DeleteGroupClientsRequest_Ids_
+  commentId: Overload:WhatsPro.Groups.Models.DeleteGroupClientsRequest.Ids
+  isSpec: "True"
+  fullName: WhatsPro.Groups.Models.DeleteGroupClientsRequest.Ids
+  nameWithType: DeleteGroupClientsRequest.Ids
 - uid: WhatsPro.Groups.Models.GroupInfo
   name: GroupInfo
   href: docs/CoreSDK/api/WhatsPro.Groups.Models.GroupInfo.html

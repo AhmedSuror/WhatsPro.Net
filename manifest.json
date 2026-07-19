@@ -566,6 +566,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "docs/CoreSDK/api/WhatsPro.Groups.Models.DeleteGroupClientsRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/CoreSDK/api/WhatsPro.Groups.Models.DeleteGroupClientsRequest.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "WhatsPro.Groups.Models.DeleteGroupClientsRequest",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "docs/CoreSDK/api/WhatsPro.Groups.Models.GroupInfo.yml",
       "output": {
         ".html": {
