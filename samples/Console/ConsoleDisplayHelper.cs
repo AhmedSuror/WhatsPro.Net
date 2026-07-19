@@ -484,4 +484,29 @@ internal static class ConsoleDisplayHelper
         var color = response.Success ? ConsoleColor.Green : ConsoleColor.Red;
         Write(color, $"{prefix} {response.Message}\n");
     }
+
+    public static void PrintError(string message)
+    {
+        Write(ConsoleColor.Red, message + "\n");
+    }
+
+    public static void PrintWarning(string message)
+    {
+        Write(ConsoleColor.Yellow, message + "\n");
+    }
+
+    public static void PrintInfo(string message)
+    {
+        Write(ConsoleColor.Cyan, message + "\n");
+    }
+
+    public static void PrintSuccess(string message)
+    {
+        Write(ConsoleColor.Green, message + "\n");
+    }
+
+    public static void PrintPrompt(string message)
+    {
+        Write(ConsoleColor.DarkGray, message);
+    }
 }
