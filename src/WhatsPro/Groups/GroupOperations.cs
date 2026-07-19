@@ -28,7 +28,7 @@ public class GroupOperations
     /// <returns>A paginated response containing group information.</returns>
     public async Task<WhatsProResponse<PagedResponse<GroupInfo>>> ListAsync(PaginationRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<GroupInfo>>>("/groups/list", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<PaginationRequest, WhatsProResponse<PagedResponse<GroupInfo>>>("/groups/index", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class GroupOperations
     /// <returns>A response containing the ID of the newly created group.</returns>
     public async Task<WhatsProResponse<CreateGroupResponse>> CreateAsync(CreateGroupRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<CreateGroupRequest, WhatsProResponse<CreateGroupResponse>>("/groups/create", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<CreateGroupRequest, WhatsProResponse<CreateGroupResponse>>("/groups", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class GroupOperations
     /// <returns>Detailed information about the requested group.</returns>
     public async Task<WhatsProResponse<GroupInfo>> GetAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.GetAsync<WhatsProResponse<GroupInfo>>($"/groups/get/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.GetAsync<WhatsProResponse<GroupInfo>>($"/groups/{id}", skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class GroupOperations
     /// <returns>A response indicating success or failure of the update operation.</returns>
     public async Task<WhatsProResponse<string>> UpdateAsync(int id, UpdateGroupRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<UpdateGroupRequest, WhatsProResponse<string>>($"/groups/update/{id}", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PutAsync<UpdateGroupRequest, WhatsProResponse<string>>($"/groups/{id}", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public class GroupOperations
     /// <returns>A response indicating the success of the transfer operation.</returns>
     public async Task<WhatsProResponse<string>> TransferClientsAsync(TransferClientsRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<TransferClientsRequest, WhatsProResponse<string>>("/groups/transfer", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<TransferClientsRequest, WhatsProResponse<string>>("/groups/transfer_clients", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -103,8 +103,8 @@ public class GroupOperations
     /// <param name="request">The request containing the client IDs to delete from their respective groups.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A response indicating the success of the client deletion operation.</returns>
-    public async Task<WhatsProResponse<string>> DeleteClientsAsync(DeleteRequest request, CancellationToken cancellationToken = default)
+    public async Task<WhatsProResponse<string>> DeleteClientsAsync(DeleteGroupClientsRequest request, CancellationToken cancellationToken = default)
     {
-        return await _httpClient.PostAsync<DeleteRequest, WhatsProResponse<string>>("/groups/delete_clients", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
+        return await _httpClient.PostAsync<DeleteGroupClientsRequest, WhatsProResponse<string>>("/groups/destroy_clients", request, skipAuth: false, cancellationToken).ConfigureAwait(false);
     }
 }

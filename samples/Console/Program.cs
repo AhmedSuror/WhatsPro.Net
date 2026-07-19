@@ -71,13 +71,14 @@ class Program
         {
             Console.WriteLine("\n--- Menu ---");
             Console.WriteLine("1. Get Profile (Login implicitly)");
-            Console.WriteLine("2. Clients Menu");
-            Console.WriteLine("3. Dashboard Menu");
-            Console.WriteLine("4. Manage Messages (Encrypted)");
-            Console.WriteLine("5. Send Message (Non-Encrypted)");
-            Console.WriteLine("6. View API Token");
-            Console.WriteLine("7. Sessions Menu");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("2. Groups Menu");
+            Console.WriteLine("3. Clients Menu");
+            Console.WriteLine("4. Dashboard Menu");
+            Console.WriteLine("5. Manage Messages (Encrypted)");
+            Console.WriteLine("6. Send Message (Non-Encrypted)");
+            Console.WriteLine("7. View API Token");
+            Console.WriteLine("8. Sessions Menu");
+            Console.WriteLine("9. Exit");
             Console.Write("Choose an option: ");
             var choice = Console.ReadLine();
 
@@ -93,6 +94,149 @@ class Program
                             Console.WriteLine("Profile retrieved but user data was unavailable.");
                         break;
                     case "2":
+                        Console.WriteLine("\n--- Groups Menu ---");
+                        Console.WriteLine("1. List Groups");
+                        Console.WriteLine("2. Get Group by ID");
+                        Console.WriteLine("3. Get All Groups");
+                        Console.WriteLine("4. Create Group");
+                        Console.WriteLine("5. Update Group");
+                        Console.WriteLine("6. Delete Group(s)");
+                        Console.WriteLine("7. Transfer Clients to Another Group");
+                        Console.WriteLine("8. Delete Group's Clients");
+                        Console.Write("Choose an option: ");
+                        var groupChoice = Console.ReadLine();
+                        switch (groupChoice)
+                        {
+                            case "1":
+                                Console.Write("Enter page number (default 1): ");
+                                var pageInput = Console.ReadLine();
+                                var pageNum = int.TryParse(pageInput, out int p) ? p : 1;
+                                var groups = await client.Groups.ListAsync(new PaginationRequest { Page = pageNum });
+                                if (groups.Data != null)
+                                    ConsoleDisplayHelper.PrintGroups(groups.Data);
+                                else
+                                    Console.WriteLine("No groups returned.");
+                                break;
+                            case "2":
+                                Console.Write("Enter Group ID: ");
+                                if (int.TryParse(Console.ReadLine(), out int groupId))
+                                {
+                                    var groupInfo = await client.Groups.GetAsync(groupId);
+                                    if (groupInfo.Data != null)
+                                        ConsoleDisplayHelper.PrintGroupDetail(groupInfo.Data);
+                                    else
+                                        Console.WriteLine($"No group found with ID {groupId}.");
+                                }
+                                else { Console.WriteLine("Invalid Group ID."); }
+                                break;
+                            case "3":
+                                var allGroups = await client.Groups.GetAllAsync();
+                                if (allGroups.Data != null)
+                                {
+                                    var dummyPaged = new PagedResponse<WhatsPro.Groups.Models.GroupInfo>
+                                    {
+                                        Data = allGroups.Data,
+                                        CurrentPage = 1,
+                                        LastPage = 1,
+                                        Total = allGroups.Data.Count
+                                    };
+                                    ConsoleDisplayHelper.PrintGroups(dummyPaged);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No groups returned.");
+                                }
+                                break;
+                            case "4":
+                                Console.Write("Enter Group Name: ");
+                                var cName = Console.ReadLine() ?? "";
+                                Console.Write("Enter Notes (optional): ");
+                                var cNotes = Console.ReadLine();
+                                
+                                var createReq = new WhatsPro.Groups.Models.CreateGroupRequest
+                                {
+                                    Name = cName,
+                                    Notes = cNotes
+                                };
+                                var createRes = await client.Groups.CreateAsync(createReq);
+                                Console.WriteLine($"API says: {createRes.Message}");
+                                break;
+                            case "5":
+                                Console.Write("Enter Group ID to Update: ");
+                                if (int.TryParse(Console.ReadLine(), out int uId))
+                                {
+                                    Console.Write("Enter Name: ");
+                                    var uName = Console.ReadLine() ?? "";
+                                    Console.Write("Enter Notes (optional): ");
+                                    var uNotes = Console.ReadLine();
+
+                                    var updateReq = new WhatsPro.Groups.Models.UpdateGroupRequest
+                                    {
+                                        Name = uName,
+                                        Notes = uNotes
+                                    };
+                                    var updateRes = await client.Groups.UpdateAsync(uId, updateReq);
+                                    Console.WriteLine($"API says: {updateRes.Message}");
+                                }
+                                else { Console.WriteLine("Invalid Group ID."); }
+                                break;
+                            case "6":
+                                Console.Write("Enter Group ID(s) to delete (comma-separated): ");
+                                var dIdsInput = Console.ReadLine();
+                                var deleteIds = new System.Collections.Generic.List<int>();
+                                foreach (var part in (dIdsInput ?? "").Split(','))
+                                {
+                                    if (int.TryParse(part.Trim(), out int did))
+                                        deleteIds.Add(did);
+                                }
+                                if (deleteIds.Count == 0) { Console.WriteLine("No valid IDs provided."); break; }
+                                var deleteRes = await client.Groups.DeleteAsync(new WhatsPro.Models.DeleteRequest { Ids = deleteIds });
+                                Console.WriteLine($"API says: {deleteRes.Message}");
+                                break;
+                            case "7":
+                                Console.Write("Enter Group ID(s) whose clients to transfer (comma-separated): ");
+                                var tIdsInput = Console.ReadLine();
+                                var transferIds = new System.Collections.Generic.List<int>();
+                                foreach (var part in (tIdsInput ?? "").Split(','))
+                                {
+                                    if (int.TryParse(part.Trim(), out int tid))
+                                        transferIds.Add(tid);
+                                }
+                                if (transferIds.Count == 0) { Console.WriteLine("No valid source Group IDs provided."); break; }
+                                Console.Write("Enter Target Group ID: ");
+                                if (int.TryParse(Console.ReadLine(), out int tGroupId))
+                                {
+                                    var transferReq = new WhatsPro.Groups.Models.TransferClientsRequest
+                                    {
+                                        Ids = transferIds,
+                                        GroupId = tGroupId
+                                    };
+                                    var transferRes = await client.Groups.TransferClientsAsync(transferReq);
+                                    Console.WriteLine($"API says: {transferRes.Message}");
+                                }
+                                else { Console.WriteLine("Invalid Target Group ID."); }
+                                break;
+                            case "8":
+                                Console.Write("Enter Group ID(s) to delete clients from (comma-separated): ");
+                                var dcIdsInput = Console.ReadLine();
+                                var deleteClientIds = new System.Collections.Generic.List<int>();
+                                foreach (var part in (dcIdsInput ?? "").Split(','))
+                                {
+                                    if (int.TryParse(part.Trim(), out int dcid))
+                                        deleteClientIds.Add(dcid);
+                                }
+                                if (deleteClientIds.Count == 0) { Console.WriteLine("No valid Group IDs provided."); break; }
+                                var deleteClientsReq = new WhatsPro.Groups.Models.DeleteGroupClientsRequest { Ids = deleteClientIds };
+                                var deleteClientsRes = await client.Groups.DeleteClientsAsync(deleteClientsReq);
+                                Console.WriteLine($"API says: {deleteClientsRes.Message}");
+                                break;
+                            default:
+                                Console.WriteLine("Invalid group option.");
+                                break;
+                        }
+                        break;
+
+                    case "3":
                         Console.WriteLine("\n--- Clients Menu ---");
                         Console.WriteLine("1. List Clients");
                         Console.WriteLine("2. Get Client by ID");
@@ -245,7 +389,7 @@ class Program
                                 break;
                         }
                         break;
-                    case "3":
+                    case "4":
                         Console.WriteLine("\n--- Dashboard Menu ---");
                         Console.WriteLine("1. Dashboard Summary");
                         Console.WriteLine("2. Send Chart");
@@ -279,7 +423,7 @@ class Program
                                 break;
                         }
                         break;
-                    case "4":
+                    case "5":
                         Console.WriteLine("\n--- Manage Messages (Encrypted) ---");
                         Console.WriteLine("1. List Messages");
                         Console.WriteLine("2. Get Message Details");
@@ -343,7 +487,7 @@ class Program
                                 break;
                         }
                         break;
-                    case "5":
+                    case "6":
                         Console.WriteLine("\n--- Send Non-Encrypted Message ---");
                         Console.WriteLine("1. Full phone format");
                         Console.WriteLine("2. Country code");
@@ -413,11 +557,11 @@ class Program
                             Console.WriteLine("Invalid type choice.");
                         }
                         break;
-                    case "6":
+                    case "7":
                         var token = await client.Auth.GetApiTokenAsync();
                         Console.WriteLine($"Your API Token is: {token}");
                         break;
-                    case "7":
+                    case "8":
                         Console.WriteLine("\n--- Sessions Menu ---");
                         Console.WriteLine("1. List Sessions");
                         Console.WriteLine("2. Get Session by ID");
@@ -519,7 +663,7 @@ class Program
                                 break;
                         }
                         break;
-                    case "8":
+                    case "9":
                         return;
                     default:
                         Console.WriteLine("Invalid option.");

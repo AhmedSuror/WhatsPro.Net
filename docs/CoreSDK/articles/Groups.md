@@ -42,7 +42,7 @@ When a new event is created in your system, you can automatically create a corre
 var createReq = new WhatsPro.Groups.Models.CreateGroupRequest
 {
     Name = "Summer Sale 2026",
-    Color = "#FF5733" // Hex color code for the UI tag
+    Notes = "Created automatically"
 };
 
 var createRes = await client.Groups.CreateAsync(createReq);
@@ -59,10 +59,8 @@ Move selected clients (or all clients) from one group to another.
 ```csharp
 var transferReq = new WhatsPro.Groups.Models.TransferClientsRequest
 {
-    GroupId = 1, // Source Group
-    MoveToGroupId = 2, // Destination Group
-    // Provide a list of client IDs to move, or omit/leave empty to move everyone
-    ClientsIds = new List<int> { 101, 102, 103 } 
+    Ids = new List<int> { 101, 102, 103 }, // Source Client IDs or Group IDs
+    GroupId = 2 // Destination Group ID
 };
 
 await client.Groups.TransferClientsAsync(transferReq);
@@ -72,9 +70,9 @@ await client.Groups.TransferClientsAsync(transferReq);
 Remove clients from a group in bulk.
 
 ```csharp
-var deleteReq = new WhatsPro.Models.DeleteRequest
+var deleteReq = new WhatsPro.Groups.Models.DeleteGroupClientsRequest
 {
-    Ids = new List<int> { 101, 102, 103 } // IDs of the clients to delete
+    Ids = new List<int> { 101, 102, 103 } // IDs of the groups to destroy clients from
 };
 
 await client.Groups.DeleteClientsAsync(deleteReq);

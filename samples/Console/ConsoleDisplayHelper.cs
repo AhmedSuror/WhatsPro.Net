@@ -179,6 +179,55 @@ internal static class ConsoleDisplayHelper
         Console.WriteLine();
     }
 
+    /// <summary>Prints a formatted table of groups with pagination info.</summary>
+    public static void PrintGroups(PagedResponse<WhatsPro.Groups.Models.GroupInfo> paged)
+    {
+        Console.WriteLine();
+        Write(SectionColor, $"── Groups ");
+        Write(ConsoleColor.Gray, $"({paged.Total} total, page {paged.CurrentPage}/{paged.LastPage})");
+        Console.WriteLine();
+
+        // Table header
+        Write(LabelColor, $"  {"ID",-6}  {"Name",-22}  {"Clients",-10}  {"Created At",-12}  Notes");
+        Console.WriteLine();
+        Write(BorderColor, "  " + new string(SectionChar, 6) + "  " + new string(SectionChar, 22) + "  " + new string(SectionChar, 10) + "  " + new string(SectionChar, 12) + "  " + new string(SectionChar, 12));
+        Console.WriteLine();
+
+        foreach (var g in paged.Data)
+        {
+            Write(NullColor,  $"  [{g.Id,-4}]  ");
+            Write(ValueColor, $"{Truncate(g.Name, 22),-22}  ");
+            Write(ValueColor, $"{g.ClientsCount,-10}  ");
+            Write(ValueColor, $"{g.CreatedAt.ToString("yyyy-MM-dd"),-12}  ");
+
+            var notes = string.IsNullOrWhiteSpace(g.Notes) ? null : g.Notes;
+            PrintValue(notes);
+        }
+
+        Console.WriteLine();
+    }
+
+    /// <summary>Prints all fields of a single GroupInfo.</summary>
+    public static void PrintGroupDetail(WhatsPro.Groups.Models.GroupInfo g)
+    {
+        PrintDoubleBorder();
+        PrintCenteredHeader("📁  Group Details");
+        PrintDoubleBorder();
+        Console.WriteLine();
+
+        PrintSectionHeader("Group");
+        PrintField("ID",          g.Id.ToString());
+        PrintField("Name",        g.Name);
+        PrintField("Notes",       g.Notes);
+        PrintField("Clients Count",g.ClientsCount.ToString());
+        PrintField("Created At",  g.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss"));
+        PrintField("Updated At",  g.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"));
+        Console.WriteLine();
+
+        PrintDoubleBorder();
+        Console.WriteLine();
+    }
+
     /// <summary>Prints a formatted table of sessions with pagination info.</summary>
     public static void PrintSessions(PagedResponse<WhatsPro.Sessions.Models.SessionInfo> paged)
     {

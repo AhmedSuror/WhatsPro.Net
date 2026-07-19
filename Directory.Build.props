@@ -15,7 +15,7 @@
       All projects share the same version so consumers can reason about compatibility.
     -->
     <VersionPrefix>0.3.0</VersionPrefix>
-    <VersionSuffix>beta.5</VersionSuffix>
+    <VersionSuffix>beta.6</VersionSuffix>
     <!-- AssemblyVersion only increments on MAJOR.MINOR to stay compatible with strong-naming -->
     <AssemblyVersion>0.3.0.0</AssemblyVersion>
     <!-- FileVersion reflects the full numeric version for Win32 resource metadata -->
