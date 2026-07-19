@@ -472,4 +472,16 @@ internal static class ConsoleDisplayHelper
         if (filled > barWidth) filled = barWidth;
         return new string('\u2588', filled) + new string('\u2591', barWidth - filled);
     }
+
+    public static void PrintApiResponse(IWhatsProResponse? response, string prefix = "API says:")
+    {
+        if (response is null)
+        {
+            Write(ConsoleColor.Red, $"{prefix} Null response\n");
+            return;
+        }
+
+        var color = response.Success ? ConsoleColor.Green : ConsoleColor.Red;
+        Write(color, $"{prefix} {response.Message}\n");
+    }
 }

@@ -159,7 +159,7 @@ class Program
                                     Notes = cNotes
                                 };
                                 var createRes = await client.Groups.CreateAsync(createReq);
-                                Console.WriteLine($"API says: {createRes.Message}");
+                                ConsoleDisplayHelper.PrintApiResponse(createRes);
                                 break;
                             case "5":
                                 Console.Write("Enter Group ID to Update: ");
@@ -176,7 +176,7 @@ class Program
                                         Notes = uNotes
                                     };
                                     var updateRes = await client.Groups.UpdateAsync(uId, updateReq);
-                                    Console.WriteLine($"API says: {updateRes.Message}");
+                                    ConsoleDisplayHelper.PrintApiResponse(updateRes);
                                 }
                                 else { Console.WriteLine("Invalid Group ID."); }
                                 break;
@@ -191,7 +191,7 @@ class Program
                                 }
                                 if (deleteIds.Count == 0) { Console.WriteLine("No valid IDs provided."); break; }
                                 var deleteRes = await client.Groups.DeleteAsync(new WhatsPro.Models.DeleteRequest { Ids = deleteIds });
-                                Console.WriteLine($"API says: {deleteRes.Message}");
+                                ConsoleDisplayHelper.PrintApiResponse(deleteRes);
                                 break;
                             case "7":
                                 Console.Write("Enter Group ID(s) whose clients to transfer (comma-separated): ");
@@ -212,7 +212,7 @@ class Program
                                         GroupId = tGroupId
                                     };
                                     var transferRes = await client.Groups.TransferClientsAsync(transferReq);
-                                    Console.WriteLine($"API says: {transferRes.Message}");
+                                    ConsoleDisplayHelper.PrintApiResponse(transferRes);
                                 }
                                 else { Console.WriteLine("Invalid Target Group ID."); }
                                 break;
@@ -228,7 +228,7 @@ class Program
                                 if (deleteClientIds.Count == 0) { Console.WriteLine("No valid Group IDs provided."); break; }
                                 var deleteClientsReq = new WhatsPro.Groups.Models.DeleteGroupClientsRequest { Ids = deleteClientIds };
                                 var deleteClientsRes = await client.Groups.DeleteClientsAsync(deleteClientsReq);
-                                Console.WriteLine($"API says: {deleteClientsRes.Message}");
+                                ConsoleDisplayHelper.PrintApiResponse(deleteClientsRes);
                                 break;
                             default:
                                 Console.WriteLine("Invalid group option.");
@@ -290,7 +290,7 @@ class Program
                                     Notes = cNotes
                                 };
                                 var createRes = await client.Clients.CreateAsync(createReq);
-                                Console.WriteLine($"API says: {createRes.Message}");
+                                ConsoleDisplayHelper.PrintApiResponse(createRes);
                                 break;
                             case "4":
                                 Console.Write("Enter Client ID to Update: ");
@@ -313,7 +313,7 @@ class Program
                                         Notes = uNotes
                                     };
                                     var updateRes = await client.Clients.UpdateAsync(uId, updateReq);
-                                    Console.WriteLine($"API says: {updateRes.Message}");
+                                    ConsoleDisplayHelper.PrintApiResponse(updateRes);
                                 }
                                 else { Console.WriteLine("Invalid Client ID."); }
                                 break;
@@ -328,7 +328,7 @@ class Program
                                 }
                                 if (deleteClientIds.Count == 0) { Console.WriteLine("No valid IDs provided."); break; }
                                 var deleteRes = await client.Clients.DeleteAsync(new WhatsPro.Models.DeleteRequest { Ids = deleteClientIds });
-                                Console.WriteLine($"API says: {deleteRes.Message}");
+                                ConsoleDisplayHelper.PrintApiResponse(deleteRes);
                                 break;
                             case "6":
                                 Console.Write("Enter Client ID to add phone to: ");
@@ -342,7 +342,7 @@ class Program
                                         Phone = pPhone
                                     };
                                     var addPhoneRes = await client.Clients.AddPhoneAsync(addPhoneReq);
-                                    Console.WriteLine($"API says: {addPhoneRes.Message}");
+                                    ConsoleDisplayHelper.PrintApiResponse(addPhoneRes);
                                 }
                                 else { Console.WriteLine("Invalid Client ID."); }
                                 break;
@@ -365,7 +365,7 @@ class Program
                                         GroupId = tGroupId
                                     };
                                     var changeRes = await client.Clients.ChangeGroupAsync(changeGroupReq);
-                                    Console.WriteLine($"API says: {changeRes.Message}");
+                                    ConsoleDisplayHelper.PrintApiResponse(changeRes);
                                 }
                                 else { Console.WriteLine("Invalid Target Group ID."); }
                                 break;
@@ -381,7 +381,7 @@ class Program
                                 using (var stream = System.IO.File.OpenRead(excelPath))
                                 {
                                     var importRes = await client.Clients.ImportFromExcelAsync(stream);
-                                    Console.WriteLine($"API says: {importRes.Message}");
+                                    ConsoleDisplayHelper.PrintApiResponse(importRes);
                                 }
                                 break;
                             default:
@@ -466,7 +466,7 @@ class Program
                                 }
                                 if (deleteIds.Count == 0) { Console.WriteLine("No valid IDs provided."); break; }
                                 var deleteResult = await client.Messages.DeleteAsync(new WhatsPro.Models.DeleteRequest { Ids = deleteIds });
-                                Console.WriteLine($"API says: {deleteResult.Message}");
+                                ConsoleDisplayHelper.PrintApiResponse(deleteResult);
                                 break;
                             case "4":
                                 Console.Write("Enter target phone number (e.g. 2010...): ");
@@ -480,7 +480,7 @@ class Program
                                     Message = msgText!
                                 };
                                 var sendResult = await client.Messages.SendAsync(msgRequest);
-                                Console.WriteLine($"Success: Message sent. API says: {sendResult.Message}");
+                                ConsoleDisplayHelper.PrintApiResponse(sendResult, "Success: Message sent. API says:");
                                 break;
                             default:
                                 Console.WriteLine("Invalid option.");
@@ -550,7 +550,7 @@ class Program
                             }
                             
                             var sendResultNon = await client.Messages.SendNonEncryptedAsync(msgRequestNon);
-                            Console.WriteLine($"Success: Message sent (Non-Encrypted). API says: {sendResultNon.Message}");
+                            ConsoleDisplayHelper.PrintApiResponse(sendResultNon, "Success: Message sent (Non-Encrypted). API says:");
                         }
                         else
                         {
@@ -596,7 +596,7 @@ class Program
                                     var result = await client.Sessions.ConnectAsync(cId);
                                     if (result != null)
                                     {
-                                        Console.WriteLine($"API says: {result.Message}");
+                                        ConsoleDisplayHelper.PrintApiResponse(result);
                                         if (result.Data != null && !string.IsNullOrEmpty(result.Data.Qr))
                                         {
                                             if (result.Data.Qr == "connected" || result.Data.Qr == "qr")
@@ -634,7 +634,7 @@ class Program
                                     Console.Write("Disconnect forever? (y/n): ");
                                     bool forever = Console.ReadLine()?.Trim().ToLower() == "y";
                                     var result = await client.Sessions.DisconnectAsync(dId, forever);
-                                    Console.WriteLine($"API says: {result?.Message ?? "Null response"}");
+                                    ConsoleDisplayHelper.PrintApiResponse(result);
                                 }
                                 else { Console.WriteLine("Invalid Session ID."); }
                                 break;
@@ -643,7 +643,7 @@ class Program
                                 if (int.TryParse(Console.ReadLine(), out int cnId))
                                 {
                                     var result = await client.Sessions.ChangeNameAsync(cnId);
-                                    Console.WriteLine($"API says: {result?.Message ?? "Null response"}");
+                                    ConsoleDisplayHelper.PrintApiResponse(result);
                                 }
                                 else { Console.WriteLine("Invalid Session ID."); }
                                 break;
@@ -654,7 +654,7 @@ class Program
                                     Console.Write("Enter new Webhook URL: ");
                                     var wUrl = Console.ReadLine();
                                     var result = await client.Sessions.SetWebhookAsync(wId, new WhatsPro.Sessions.Models.SetWebhookRequest { Url = wUrl ?? string.Empty });
-                                    Console.WriteLine($"API says: {result?.Message ?? "Null response (Silent fail)"}");
+                                    ConsoleDisplayHelper.PrintApiResponse(result);
                                 }
                                 else { Console.WriteLine("Invalid Session ID."); }
                                 break;
