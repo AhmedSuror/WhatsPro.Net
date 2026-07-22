@@ -14,12 +14,11 @@
         - Remove VersionSuffix entirely when releasing a stable build
       All projects share the same version so consumers can reason about compatibility.
     -->
-    <VersionPrefix>0.3.0</VersionPrefix>
-    <VersionSuffix>beta.8</VersionSuffix>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <!-- AssemblyVersion only increments on MAJOR.MINOR to stay compatible with strong-naming -->
-    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <!-- FileVersion reflects the full numeric version for Win32 resource metadata -->
-    <FileVersion>0.3.0.0</FileVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <!-- ════════════════════════════════════════════════════════
