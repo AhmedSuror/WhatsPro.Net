@@ -33,6 +33,18 @@ internal class WhatsProHttpClient : IDisposable
         _authManager = new AuthenticationManager(_options, this);
     }
 
+    internal WhatsProHttpClient(WhatsProOptions options, HttpMessageHandler messageHandler)
+    {
+        _options = options ?? throw new ArgumentNullException(nameof(options));
+        _httpClient = new HttpClient(messageHandler);
+        _httpClient.Timeout = _options.Timeout;
+        
+        _httpClient.DefaultRequestHeaders.Accept.Clear();
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        _authManager = new AuthenticationManager(_options, this);
+    }
+
     private async Task EnsureAuthenticationAsync(HttpRequestMessage requestMessage, bool skipAuth, CancellationToken cancellationToken)
     {
         if (!skipAuth)

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\src\WhatsPro\WhatsPro.csproj" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
 </Project>

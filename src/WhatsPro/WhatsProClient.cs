@@ -67,6 +67,20 @@ public class WhatsProClient : IDisposable
         Messages = new MessageOperations(_httpClient);
     }
 
+    internal WhatsProClient(WhatsProOptions options, System.Net.Http.HttpMessageHandler messageHandler)
+    {
+        _options = options ?? throw new ArgumentNullException(nameof(options));
+        ValidateOptions(_options);
+        
+        _httpClient = new WhatsProHttpClient(_options, messageHandler);
+        Auth = new AuthOperations(_httpClient);
+        Dashboard = new DashboardOperations(_httpClient);
+        Clients = new ClientOperations(_httpClient);
+        Groups = new GroupOperations(_httpClient);
+        Sessions = new SessionOperations(_httpClient);
+        Messages = new MessageOperations(_httpClient);
+    }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="WhatsProClient"/> class using an action to configure options.
     /// </summary>
