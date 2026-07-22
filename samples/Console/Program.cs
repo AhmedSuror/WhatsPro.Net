@@ -277,6 +277,13 @@ class Program
                                 var cPhone = Console.ReadLine() ?? "";
                                 ConsoleDisplayHelper.PrintPrompt("Enter Name: ");
                                 var cName = Console.ReadLine() ?? "";
+                                var cGroupsRes = await client.Groups.GetAllAsync();
+                                if (cGroupsRes.Data != null && cGroupsRes.Data.Count > 0)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                                    Console.WriteLine("  Available Groups: " + string.Join(", ", cGroupsRes.Data.ConvertAll(g => $"[{g.Id}] {g.Name}")));
+                                    Console.ResetColor();
+                                }
                                 ConsoleDisplayHelper.PrintPrompt("Enter Group ID: ");
                                 int cGroupId = int.TryParse(Console.ReadLine(), out int cgid) ? cgid : 0;
                                 ConsoleDisplayHelper.PrintPrompt("Enter Notes (optional): ");
@@ -300,6 +307,13 @@ class Program
                                     var uName = Console.ReadLine() ?? "";
                                     ConsoleDisplayHelper.PrintPrompt("Enter Phone: ");
                                     var uPhone = Console.ReadLine() ?? "";
+                                    var uGroupsRes = await client.Groups.GetAllAsync();
+                                    if (uGroupsRes.Data != null && uGroupsRes.Data.Count > 0)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                                        Console.WriteLine("  Available Groups: " + string.Join(", ", uGroupsRes.Data.ConvertAll(g => $"[{g.Id}] {g.Name}")));
+                                        Console.ResetColor();
+                                    }
                                     ConsoleDisplayHelper.PrintPrompt("Enter Group ID: ");
                                     int uGroupId = int.TryParse(Console.ReadLine(), out int ugid) ? ugid : 0;
                                     ConsoleDisplayHelper.PrintPrompt("Enter Notes (optional): ");
@@ -356,6 +370,13 @@ class Program
                                         changeIds.Add(cid);
                                 }
                                 if (changeIds.Count == 0) { ConsoleDisplayHelper.PrintError("No valid IDs provided."); break; }
+                                var tGroupsRes = await client.Groups.GetAllAsync();
+                                if (tGroupsRes.Data != null && tGroupsRes.Data.Count > 0)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                                    Console.WriteLine("  Available Groups: " + string.Join(", ", tGroupsRes.Data.ConvertAll(g => $"[{g.Id}] {g.Name}")));
+                                    Console.ResetColor();
+                                }
                                 ConsoleDisplayHelper.PrintPrompt("Enter Target Group ID: ");
                                 if (int.TryParse(Console.ReadLine(), out int tGroupId))
                                 {
