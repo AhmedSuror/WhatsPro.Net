@@ -1,5 +1,7 @@
 # WhatsPro.Net
 
+[![Build & Test](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/ci.yml/badge.svg)](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/ci.yml) [![Build and Deploy DocFX](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/docs.yml/badge.svg)](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/docs.yml) [![pages-build-deployment](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/pages/pages-build-deployment) [![Publish to NuGet](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/nuget-publish.yml/badge.svg)](https://github.com/AhmedSuror/WhatsPro.Net/actions/workflows/nuget-publish.yml)
+
 A non-official .NET SDK library for the Whats-Pro.net REST API.
 
 ## Features
