@@ -42,5 +42,11 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageReleaseNotes>See CHANGELOG.md for full release history.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
+    <!-- SourceLink and Symbol Support -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 </Project>
